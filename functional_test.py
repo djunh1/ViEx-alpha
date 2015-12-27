@@ -20,21 +20,21 @@ class NewVisitorTest(unittest.TestCase):
 
         self.assertIn('Value Investing Exchange',self.browser.title)
         header_text=self.browser.find_element_by_tag_name('h1').text
-        self.assertIn('Value Investing Exchange',header_text)
+        self.assertIn('Search for a Stock Symbol',header_text)
 
         #Enter an item into the text box
         inputbox=self.browser.find_element_by_id('id_stock_item')
-        self.assertEqual(inputbox.get_attribute('placeholder'),'Enter a stock')
+        self.assertEqual(inputbox.get_attribute('placeholder'),'Enter a Stock')
 
         #Type NOV into a text box
         inputbox.send_keys('NOV')
 
         #When entered, NOV should appear on the sceen
-        inputbox.send_keys(keys.ENTER)
+        inputbox.send_keys(Keys.ENTER)
 
-        table=self.browser.find_element_by_id('id_list_table')
+        table=self.browser.find_element_by_id('id_stock_table')
         rows=table.find_elements_by_tag_name('tr')
-        self.assertTrue(any(row.text=='1: NOV' for row in rows))
+        self.assertTrue(any(row.text=='1: NOV' for row in rows),"Stock doesn't appear in table")
 
         self.fail('Finish the test!')  
 
