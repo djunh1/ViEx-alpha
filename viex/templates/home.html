@@ -4,8 +4,15 @@
 	</head>
 	<body>
 		<h1>Search for a Stock Symbol</h1>
-		<input id="id_stock_item" placeholder="Enter a Stock">
+		<form method="POST">
+			<input name="stock_input" id="id_stock_item" placeholder="Enter a Stock">
+			{% csrf_token %}
+		</form>
 		<table id="id_stock_table">
+			<tr>
+				<td>1: {{new_stock_text}}
+				</td>
+			</tr>	
 		</table>
 	</body>
 </html>
