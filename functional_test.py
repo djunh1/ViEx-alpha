@@ -41,10 +41,10 @@ class NewVisitorTest(unittest.TestCase):
         time.sleep(.1)
         table=self.browser.find_element_by_id('id_stock_table')
         rows=table.find_elements_by_tag_name('tr')
-        #self.assertTrue(any(row.text=='1: NOV' for row in rows),"Stock doesn't appear in table - it was /n%s" %(table.text))
-        #This is better
+        
+        
         self.check_row_in_table('1: NOV')
-        self.check_row_in_table('1: SLCA')
+        self.check_row_in_table('2: SLCA')
 
         self.fail('Finish the test!')  
 

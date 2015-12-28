@@ -1,8 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from viex.models import Stock
 
 # Create your views here.
 def home_page(request):
 	
-	#post request comes from the input, with name attribute being stock_item
-	return render(request,'home.html',{'new_stock_text': request.POST.get('stock_item',''),})
+	if request.method=='POST':
+		new_stock_text=request.POST['stock_input']
+		Stock.objects.create(text=new_stock_text)
+	else:
+		new_stock_text=''
+
+	return render(request,'home.html',{'new_stock_text': new_stock_text,})
