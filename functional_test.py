@@ -30,23 +30,26 @@ class NewVisitorTest(unittest.TestCase):
 
         #Enter an item into the text box
         inputbox=self.browser.find_element_by_id('id_stock_item')
-        self.assertEqual(inputbox.get_attribute('placeholder'),'Enter a Stock')
+        self.assertEqual(inputbox.get_attribute('placeholder'),'Search stocks...')
 
         #Type NOV into a text box
         inputbox.send_keys('NOV')
 
         #When entered, NOV should appear on the sceen
         inputbox.send_keys(Keys.ENTER)
-
-        time.sleep(.1)
-        table=self.browser.find_element_by_id('id_stock_table')
-        rows=table.find_elements_by_tag_name('tr')
-        
-        
         self.check_row_in_table('1: NOV')
-        self.check_row_in_table('2: SLCA')
 
-        self.fail('Finish the test!')  
+        #Type SLCA into a text box
+        inputbox=self.browser.find_element_by_id('id_stock_item')
+        inputbox.send_keys('SLCA')
+        time.sleep(5)
+        #When entered, SLCA should appear on the sceen
+        inputbox.send_keys(Keys.ENTER)
+
+        self.check_row_in_table('2: SLCA')
+        self.check_row_in_table('1: NOV')
+
+        self.fail('All tests up to this point passed.  Keep testing...')  
 
         #Other comments
 

@@ -26,7 +26,6 @@ class HomePageTest(TestCase):
 		request.method='POST'
 		#The name attribute of the input field is used, eg <input name='stock_input'> 
 		#This will pretend to POST to the stock_input within the <input> tag
-		#But its not working.  #fail
 		request.POST['stock_input'] = 'Search Stocks'
 
 		#Get the response
@@ -36,17 +35,31 @@ class HomePageTest(TestCase):
 		new_stock=Stock.objects.first()
 		self.assertEqual(new_stock.text,'Search Stocks')
 
-		self.assertIn('Search Stocks', response.content.decode())
 
-		#'new_stock_text' is mapped to the {{}} in the html
-		expected_html=render_to_string('home.html',{'new_stock_text': 'Search Stocks'})
-		self.assertEqual(response.content.decode(), expected_html)
+	def home_page_redirects_after_POST(self):
+		request=HttpRequest()
+		request.method='POST'
+		request.POST['stock_input'] = 'Search Stocks'
+
+		response=home_page(request)
+
+		self.assertEqual(response.status_code,302)
+		self.assertEqual(response['location'],'/')
 
 	def test_homepage_only_saves_when_required(self):
 		request=HttpRequest()
 		home_page(request)
 		self.assertEqual(Stock.objects.count(),0)
 
+	def test_homepage_displays_stocks(self):
+		Stock.objects.create(text='NOV 1')
+		Stock.objects.create(text='SLCA 2')
+
+		request=HttpRequest()
+		response=home_page(request)
+
+		self.assertIn('NOV 1', response.content.decode())
+		self.assertIn('SLCA 2', response.content.decode())
 
 class StockModelTest(TestCase):
 	

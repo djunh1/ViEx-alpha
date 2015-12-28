@@ -9,10 +9,9 @@
 			{% csrf_token %}
 		</form>
 		<table id="id_stock_table">
-			<tr>
-				<td>1: {{new_stock_text}}
-				</td>
-			</tr>	
+			{% for stock in stocks %}
+			<tr><td>{{ forloop.counter }}: {{ stock.text }}</td></tr>
+			{% endfor %}
 		</table>
 	</body>
 </html>
