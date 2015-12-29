@@ -45,7 +45,7 @@ class NewVisitorTest(LiveServerTestCase):
         #Type SLCA into a text box
         inputbox=self.browser.find_element_by_id('id_stock_item')
         inputbox.send_keys('SLCA')
-        time.sleep(5)
+        time.sleep(2)
         #When entered, SLCA should appear on the sceen
         inputbox.send_keys(Keys.ENTER)
 
@@ -59,15 +59,26 @@ class NewVisitorTest(LiveServerTestCase):
         #New User should arrive to home page and see nothing
 
         self.browser.get(self.live_server_url)
-        page_test=self.browser.find_element_by_tag_name('body').text
-        self.assertNotIn('1: NOV',page_text)
-        self.assertNotIn('2: SLCA',page_text)
+        page_text=self.browser.find_element_by_tag_name('body').text
+        self.assertNotIn('NOV',page_text)
+        self.assertNotIn('SLCA',page_text)
 
         #New User starts new stock list
 
         inputbox=self.browser.find_element_by_id('id_stock_item')
         inputbox.send_keys('AAPL')
         inputbox.send_keys(Keys.ENTER)
+
+        #New User gets thier own URL
+        newUser_list_url=self.browser.current_url
+        self.assertRegex(newUser_list_url,'/stocks/.+')
+        self.assertNotEqual(newUser_list_url,stock_url)
+
+        #Checking there is no previous list here
+
+        page_text=self.browser.find_element_by_tag_name('body').text
+        self.assertNotIn('NOV',page_text)
+        self.assertIn('AAPL',page_text)
 
 
         self.fail('All tests up to this point passed.  Keep testing...')  

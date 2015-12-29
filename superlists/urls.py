@@ -20,5 +20,6 @@ from viex import views
 
 urlpatterns = [
     url(r'^$', views.home_page, name='home'),
+    url(r'^stocks/one_persons_stock_list/$',views.view_stocks,name='view_stocks')
     #url(r'^admin/', include(admin.site.urls)),
 ]

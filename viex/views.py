@@ -8,7 +8,11 @@ def home_page(request):
 	if request.method=='POST':
 
 		Stock.objects.create(text=request.POST['stock_input'])
-		return redirect('/')
-	stocks=Stock.objects.all()
+		return redirect('/stocks/one_persons_stock_list/')
 
-	return render(request,'home.html',{'stocks':stocks})
+	return render(request,'home.html')
+
+
+def view_stocks(request):
+	stocks=Stock.objects.all()
+	return render(request,'stock.html',{'stocks':stocks})

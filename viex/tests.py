@@ -35,31 +35,25 @@ class HomePageTest(TestCase):
 		new_stock=Stock.objects.first()
 		self.assertEqual(new_stock.text,'Search Stocks')
 
+	def test_home_page_redirects_after_POST(self):
+		
 
-	def home_page_redirects_after_POST(self):
 		request=HttpRequest()
 		request.method='POST'
 		request.POST['stock_input'] = 'Search Stocks'
 
 		response=home_page(request)
+		
 
 		self.assertEqual(response.status_code,302)
-		self.assertEqual(response['location'],'/')
+		self.assertEqual(response['location'],'/stocks/one_persons_stock_list/')
 
 	def test_homepage_only_saves_when_required(self):
 		request=HttpRequest()
 		home_page(request)
 		self.assertEqual(Stock.objects.count(),0)
 
-	def test_homepage_displays_stocks(self):
-		Stock.objects.create(text='NOV 1')
-		Stock.objects.create(text='SLCA 2')
 
-		request=HttpRequest()
-		response=home_page(request)
-
-		self.assertIn('NOV 1', response.content.decode())
-		self.assertIn('SLCA 2', response.content.decode())
 
 class StockModelTest(TestCase):
 	
@@ -79,3 +73,22 @@ class StockModelTest(TestCase):
 		second_saved_stock=saved_stocks[1]
 		self.assertEqual(first_saved_stock.text,'First stock on list')
 		self.assertEqual(second_saved_stock.text,'Second stock on list')
+
+class LiveViewTest(TestCase):
+
+	def test_displays_stocks(self):
+		Stock.objects.create(text='NOV 1')
+		Stock.objects.create(text='SLCA 2')
+
+		#client.get fetches the url to test
+		response=self.client.get('/stocks/one_persons_stock_list/')
+
+		#AssertContains knows how to deal with responses and the bytes of their content
+		self.assertContains(response,'NOV 1')
+		self.assertContains(response,'SLCA 2')
+
+	def test_uses_stock_template(self):
+		response=self.client.get('/stocks/one_persons_stock_list/')
+		self.assertTemplateUsed(response,'stock.html')
+
+		
