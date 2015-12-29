@@ -21,7 +21,12 @@ class HomePageTest(TestCase):
 		expected_html=render_to_string('home.html')
 		self.assertEqual(response.content.decode(),expected_html)
 
-	def test_homepage_can_save_POST_request(self):
+class NewStockTest(TestCase):
+
+	def test_can_save_POST_request(self):
+
+		'''
+		Use this to check posts are saved during a POST request.
 		request=HttpRequest()
 		request.method='POST'
 		#The name attribute of the input field is used, eg <input name='stock_input'> 
@@ -30,29 +35,25 @@ class HomePageTest(TestCase):
 
 		#Get the response
 		response=home_page(request)
+		Refactored to below:
+		'''
+
+		#No trailing slash in url means action url, these modify the db
+		self.client.post('/stocks/new', data={'stock_input': 'Search Stocks..'})
 		
 		self.assertEqual(Stock.objects.count(),1)
 		new_stock=Stock.objects.first()
-		self.assertEqual(new_stock.text,'Search Stocks')
-
-	def test_home_page_redirects_after_POST(self):
+		self.assertEqual(new_stock.text,'Search Stocks..')
+	
+	def test_redirects_after_POST(self):
+		'''
+		use this to check that the page is redirected after a stock is searched
+		'''
+	
+		response=self.client.post('/stocks/new', data={'stock_input': 'Search Stocks..'})
 		
-
-		request=HttpRequest()
-		request.method='POST'
-		request.POST['stock_input'] = 'Search Stocks'
-
-		response=home_page(request)
-		
-
-		self.assertEqual(response.status_code,302)
-		self.assertEqual(response['location'],'/stocks/one_persons_stock_list/')
-
-	def test_homepage_only_saves_when_required(self):
-		request=HttpRequest()
-		home_page(request)
-		self.assertEqual(Stock.objects.count(),0)
-
+		#This checks to see if the url redirects to the required URL
+		self.assertRedirects(response, '/stocks/one_persons_stock_list/')
 
 
 class StockModelTest(TestCase):
@@ -91,4 +92,3 @@ class LiveViewTest(TestCase):
 		response=self.client.get('/stocks/one_persons_stock_list/')
 		self.assertTemplateUsed(response,'stock.html')
 
-		

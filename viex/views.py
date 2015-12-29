@@ -4,11 +4,6 @@ from viex.models import Stock
 
 # Create your views here.
 def home_page(request):
-	
-	if request.method=='POST':
-
-		Stock.objects.create(text=request.POST['stock_input'])
-		return redirect('/stocks/one_persons_stock_list/')
 
 	return render(request,'home.html')
 
@@ -16,3 +11,7 @@ def home_page(request):
 def view_stocks(request):
 	stocks=Stock.objects.all()
 	return render(request,'stock.html',{'stocks':stocks})
+
+def new_stock(request):
+	Stock.objects.create(text=request.POST['stock_input'])
+	return redirect('/stocks/one_persons_stock_list/')
