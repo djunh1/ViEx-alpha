@@ -3,7 +3,7 @@ from django.core.urlresolvers import resolve
 from django.http import HttpRequest
 from django.template.loader import render_to_string
 
-from viex.models import Stock
+from viex.models import Stock,StockData
 from viex.views import home_page
 
 # Create your tests here.
@@ -52,20 +52,56 @@ class NewStockTest(TestCase):
 	
 		response=self.client.post('/stocks/new', data={'stock_input': 'Search Stocks..'})
 		
+		new_stock=Stock.objects.first()
 		#This checks to see if the url redirects to the required URL
-		self.assertRedirects(response, '/stocks/one_persons_stock_list/')
+		self.assertRedirects(response, '/stocks/%d/' % (new_stock.id,))
+
+	def test_save_stock_on_existing_list_POST(self):
+		other_stock=StockData.objects.create()
+		correct_stock=StockData.objects.create()
+
+		self.client.post('/stocks/%d/add_stock' % (correct_stock.id,),data={'stock_input': 'Search Stocks..'})
 
 
-class StockModelTest(TestCase):
+		self.assertEqual(Stock.objects.count(),1)
+		new_stock=Stock.objects.first()
+		self.assertEqual(new_stock.text,'Search Stocks..')
+		self.assertEqual(new_stock.stockData,correct_stock)
+
+	def test_redirects_to_stock_view(self):
+
+		other_stock=StockData.objects.create()
+		correct_stock=StockData.objects.create()
+
+		response=self.client.post('/stocks/%d/add_stock' % (correct_stock.id,), data={'stock_input': 'Search Stocks..'})
+
+		self.assertRedirects(response, '/stocks/%d/' %(correct_stock.id,))
+
+	def test_pass_correct_stocks_to_template(self):
+		other_stocks=StockData.objects.create()
+		correct_stocks=StockData.objects.create()
+		response=self.client.get('/stocks/%d/' % (correct_stocks.id,))
+		self.assertEqual(response.context['stocks'],correct_stocks)
+
+class StockDataAndStockModelTest(TestCase):
 	
 	def test_saving_retrieving_stocks(self):
+		#Creates and saves an instance of the stock data object
+		stockData_=StockData()
+		stockData_.save()
+
 		first_stock=Stock()
 		first_stock.text='First stock on list'
+		first_stock.stockData=stockData_
 		first_stock.save()
 
 		second_stock=Stock()
 		second_stock.text='Second stock on list'
+		second_stock.stockData=stockData_
 		second_stock.save()
+
+		saved_stockData=StockData.objects.first()
+		self.assertEqual(saved_stockData,stockData_)
 
 		saved_stocks=Stock.objects.all()
 		self.assertEqual(saved_stocks.count(),2)
@@ -73,22 +109,34 @@ class StockModelTest(TestCase):
 		first_saved_stock=saved_stocks[0]
 		second_saved_stock=saved_stocks[1]
 		self.assertEqual(first_saved_stock.text,'First stock on list')
+		self.assertEqual(first_saved_stock.stockData, stockData_)
 		self.assertEqual(second_saved_stock.text,'Second stock on list')
+		self.assertEqual(second_saved_stock.stockData, stockData_)
 
-class LiveViewTest(TestCase):
+
+class StockDataViewTest(TestCase):
 
 	def test_displays_stocks(self):
-		Stock.objects.create(text='NOV 1')
-		Stock.objects.create(text='SLCA 2')
-
+		
+		correct_stockData=StockData.objects.create()
+		Stock.objects.create(text='NOV 1' ,stockData=correct_stockData)
+		Stock.objects.create(text='SLCA 2',stockData=correct_stockData)
+		
+		other_stockData=StockData.objects.create()
+		Stock.objects.create(text='MSFT 1' ,stockData=other_stockData)
+		Stock.objects.create(text='AAPL 2',stockData=other_stockData)
 		#client.get fetches the url to test
-		response=self.client.get('/stocks/one_persons_stock_list/')
+		response=self.client.get('/stocks/%d/' %(correct_stockData.id,))
 
 		#AssertContains knows how to deal with responses and the bytes of their content
 		self.assertContains(response,'NOV 1')
 		self.assertContains(response,'SLCA 2')
+		self.assertNotContains(response, 'MSFT 1')
+		self.assertNotContains(response, 'AAPL 2')
+		
 
 	def test_uses_stock_template(self):
-		response=self.client.get('/stocks/one_persons_stock_list/')
+		stockData=StockData.objects.create()
+		response=self.client.get('/stocks/%d/' % (stockData.id,))
 		self.assertTemplateUsed(response,'stock.html')
 

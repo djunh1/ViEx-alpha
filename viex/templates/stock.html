@@ -4,12 +4,12 @@
 	</head>
 	<body>
 		<h1>Search for a Stock Symbol</h1>
-		<form method="POST" action="/stocks/new">
-			<input name="stock_input" id="id_stock_item" placeholder="Search stocks...">
+		<form method="POST" action='/stocks/{{ stock.id }}/add_stock'
+			<input name="stock_input" id="id_stock_item" placeholder="Search stocks..." >
 			{% csrf_token %}
 		</form>
 		<table id="id_stock_table">
-			{% for stock in stocks %}
+			{% for stock in stocks.stock_set.all %}
 			<tr><td>{{ forloop.counter }}: {{ stock.text }}</td></tr>
 			{% endfor %}
 		</table>

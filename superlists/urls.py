@@ -20,7 +20,8 @@ from viex import views
 
 urlpatterns = [
     url(r'^$', views.home_page, name='home'),
-    url(r'^stocks/one_persons_stock_list/$',views.view_stocks,name='view_stocks'),
-    url(r'^stocks/new$',views.new_stock, name='new_stock')
+    url(r'^stocks/new$',views.new_stock, name='new_stock'),
+    url(r'^stocks/(\d+)/$',views.view_stocks,name='view_stocks'),
+    url(r'^stocks/(\d+)/add_stock$',views.add_stock,name='add_stocks'),
     #url(r'^admin/', include(admin.site.urls)),
 ]
