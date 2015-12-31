@@ -21,5 +21,5 @@ from viex import views
 urlpatterns = [
     url(r'^new$',views.new_stock, name='new_stock'),
     url(r'^(\d+)/$',views.view_stocks,name='view_stocks'),
-    url(r'^(\d+)/add_stock$',views.add_stock,name='add_stocks'),
+    url(r'^(\d+)/add_stock$',views.add_stock,name='add_stock'),
 ]

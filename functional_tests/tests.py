@@ -39,29 +39,37 @@ class NewVisitorTest(LiveServerTestCase):
         #When entered, NOV should appear on the sceen
         inputbox.send_keys(Keys.ENTER)
         stock_url=self.browser.current_url
-        self.assertRegex(stock_url,'/stocks/.+/')
+        #Make the url as follows
+        self.assertRegex(stock_url,'/stocks/.+')
         self.check_row_in_table('1: NOV')
+
 
         #Type SLCA into a text box
         inputbox=self.browser.find_element_by_id('id_stock_item')
         inputbox.send_keys('SLCA')
-        time.sleep(2)
         #When entered, SLCA should appear on the sceen
         inputbox.send_keys(Keys.ENTER)
 
         self.check_row_in_table('2: SLCA')
         self.check_row_in_table('1: NOV')
 
-        #At this point, the user ends their session
-        self.browser.quit()
-        self.browser=webdriver.Firefox()
-
+        
         #New User should arrive to home page and see nothing
 
         self.browser.get(self.live_server_url)
         page_text=self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('NOV',page_text)
         self.assertNotIn('SLCA',page_text)
+
+        #At this point, the user ends their session
+        self.browser.quit()
+        self.browser=webdriver.Firefox()
+
+        #Fire up a new session
+        self.browser.get(self.live_server_url)
+        page_text=self.browser.find_element_by_tag_name('body').text
+        self.assertNotIn('NOV', page_text)
+        self.assertNotIn('SLCA', page_text)
 
         #New User starts new stock list
 
