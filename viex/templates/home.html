@@ -1,12 +1,5 @@
-<html>
-	<head>
-		<title>Value Investing Exchange</title>
-	</head>
-	<body>
-		<h1>Search for a Stock Symbol</h1>
-		<form method="POST" action="/stocks/new">
-			<input name="stock_input" id="id_stock_item" placeholder="Search stocks..."/>
-			{% csrf_token %}
-		</form>
-	</body>
-</html>
+{% extends 'base.html' %}
+
+{% block header_text %}Search for a stock{% endblock%}
+
+{% block form_action%}/stocks/new{% endblock %}

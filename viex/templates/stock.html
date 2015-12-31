@@ -1,18 +1,13 @@
-<html>
-	<head>
-		<title>Value Investing Exchange</title>
-	</head>
-	<body>
-		<h1>Search for a Stock Symbol</h1>
-		<!-- action is what uses the url -->
-		<form method="POST" action='/stocks/{{ stocks.id }}/add_stock'>
-			<input name="stock_input" id="id_stock_item" placeholder="Search stocks..." />
-			{% csrf_token %}
-		</form>
-		<table id="id_stock_table">
-			{% for stock in stocks.stock_set.all %}
-			<tr><td>{{ forloop.counter }}: {{ stock.text }}</td></tr>
-			{% endfor %}
-		</table>
-	</body>
-</html>
+{% extends 'base.html' %}
+
+{% block header_text %}Your stock list{% endblock %}
+
+{% block form_action %}/stocks/{{ stocks.id }}/add_stock{% endblock %}
+
+{% block table %}
+    <table id="id_stock_table">
+        {% for stock in stocks.stock_set.all %}
+            <tr><td>{{ forloop.counter }}: {{ stock.text }}</td></tr>
+        {% endfor %}
+    </table>
+{% endblock %}
