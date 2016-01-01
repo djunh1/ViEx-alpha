@@ -4,10 +4,26 @@ from selenium.webdriver.common.keys import Keys
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 import unittest
 import time
+import sys
 
 
 #class NewVisitorTest(LiveServerTestCase):  
 class NewVisitorTest(StaticLiveServerTestCase):
+    
+    @classmethod    
+    def setUpClass(cls):
+        for arg in sys.argv:
+            if 'liveserver' in arg:
+                cls.server_url='http://'+arg.split('=')[1]
+                return #
+        super().setUpClass()
+        cls.server_url=cls.live_server_url
+
+    @classmethod
+    def tearDownClass(cls):
+        if cls.server_url==cls.live_server_url:
+            super().tearDownClass()
+
     def setUp(self):  
         self.browser = webdriver.Firefox()
         self.browser.implicitly_wait(3)
@@ -20,25 +36,9 @@ class NewVisitorTest(StaticLiveServerTestCase):
         rows=table.find_elements_by_tag_name('tr')
         self.assertIn(row_text,[row.text for row in rows])
 
-    def test_styling_and_layout(self):
-        '''
-        #GO to home page
-        self.browser.get(self.live_server_url)
-        self.browser.set_window_size(1024,768)
-
-        #Input box should be in a particular location
-        inputbox=self.browser.find_element_by_id('id_stock_item')
-        self.assertAlmostEqual(inputbox.location['x']+inputbox.size['width']/2, 512,delta=5)
-
-        #The stock list should be centered too
-        inputbox.send_keys('testing\n')
-        inputbox=self.browser.find_element_by_id('id_stock_item')
-        self.assertAlmostEqual(inputbox.location['x']+inputbox.size['width']/2, 512,delta=5)
-        '''
-
     def test_can_start_a_list_and_retrieve_it_later(self):  
         # Check to see if you can get into the website
-        self.browser.get(self.live_server_url)
+        self.browser.get(self.server_url)
 
         # Look at browswer title 
 
@@ -73,7 +73,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
         
         #New User should arrive to home page and see nothing
 
-        self.browser.get(self.live_server_url)
+        self.browser.get(self.server_url)
         page_text=self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('NOV',page_text)
         self.assertNotIn('SLCA',page_text)
@@ -83,7 +83,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
         self.browser=webdriver.Firefox()
 
         #Fire up a new session
-        self.browser.get(self.live_server_url)
+        self.browser.get(self.server_url)
         page_text=self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('NOV', page_text)
         self.assertNotIn('SLCA', page_text)
