@@ -1,14 +1,45 @@
-<html>
+<!DOCTYPE html>
+<!--[if IE 7 ]><html class="ie ie7 lte9 lte8 lte7" lang="en-US"><![endif]-->
+<!--[if IE 8]><html class="ie ie8 lte9 lte8" lang="en-US">	<![endif]-->
+<!--[if IE 9]><html class="ie ie9 lte9" lang="en-US"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html class="noIE" lang="en-US">
 	<head>
+		<meta charset='utf-8'>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    	<!-- google fonts -->
+		<link href='http://fonts.googleapis.com/css?family=Raleway:500,300' rel='stylesheet' type='text/css'>
+		<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=PT+Sans'>
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Droid+Serif:regular,bold"/>
+
+    	<!-- Check settings.py.  Need to start at the static directory -->
+        <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/static/base.css" rel="stylesheet">
 		<title>Value Investing Exchange</title>
 	</head>
 	<body>
-		<h1>{% block header_text %}{% endblock%}</h1>
-		<form method="POST" action="{% block form_action %}{% endblock %}">
-			<input name="stock_input" id="id_stock_item" placeholder="Search stocks..."/>
+		<div class="container">
+		
+			<div class='row'>
+				<div class='col-sm-6 col-sm-offset-3 jumbotron'>
+					<div class='text-center'>
+					<h1>{% block header_text %}{% endblock%}</h1>
+					<form method="POST" action="{% block form_action %}{% endblock %}">
+						<input class= "form-control imput-lg" name="stock_input" id="id_stock_item" placeholder="Search stocks..."/>
 			{% csrf_token %}
-		</form>
-		{% block table%}
-		{% endblock %}
+					</form>
+					</div>
+				</div>
+			</div>
+		<div class='row'>
+			<div class='col-md-6 col-md-offset-3'>
+				{% block table%}
+				{% endblock %}
+			</div>
+		</div>
+	</div>
 	</body>
 </html>

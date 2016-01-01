@@ -5,7 +5,7 @@
 {% block form_action %}/stocks/{{ stocks.id }}/add_stock{% endblock %}
 
 {% block table %}
-    <table id="id_stock_table">
+    <table id="id_stock_table" class="table">
         {% for stock in stocks.stock_set.all %}
             <tr><td>{{ forloop.counter }}: {{ stock.text }}</td></tr>
         {% endfor %}

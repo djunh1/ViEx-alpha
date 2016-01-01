@@ -7,4 +7,4 @@ class StockData(models.Model):
 
 class Stock(models.Model):
 	text=models.TextField(default='')
-	stockData=models.ForeignKey(StockData,default=None)
+	stockData=models.ForeignKey(StockData, default=None)
