@@ -39,7 +39,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
     def test_can_start_a_list_and_retrieve_it_later(self):  
         # Check to see if you can get into the website
         self.browser.get(self.server_url)
-
+        time.sleep(3)
         # Look at browswer title 
 
         self.assertIn('Value Investing Exchange',self.browser.title)
