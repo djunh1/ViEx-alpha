@@ -3,43 +3,14 @@ from selenium.webdriver.common.keys import Keys
 #from django.test import LiveServerTestCase
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 import unittest
-import time
-import sys
+
+from .base import FunctionalTest
 
 
-#class NewVisitorTest(LiveServerTestCase):  
-class NewVisitorTest(StaticLiveServerTestCase):
-    
-    @classmethod    
-    def setUpClass(cls):
-        for arg in sys.argv:
-            if 'liveserver' in arg:
-                cls.server_url='http://'+arg.split('=')[1]
-                return #
-        super().setUpClass()
-        cls.server_url=cls.live_server_url
-
-    @classmethod
-    def tearDownClass(cls):
-        if cls.server_url==cls.live_server_url:
-            super().tearDownClass()
-
-    def setUp(self):  
-        self.browser = webdriver.Firefox()
-        self.browser.implicitly_wait(3)
-
-    def tearDown(self):  
-        self.browser.quit()
-
-    def check_row_in_table(self,row_text):
-        table=self.browser.find_element_by_id('id_stock_table')
-        rows=table.find_elements_by_tag_name('tr')
-        self.assertIn(row_text,[row.text for row in rows])
-
+class NewVisitorTest(FunctionalTest): 
     def test_can_start_a_list_and_retrieve_it_later(self):  
         # Check to see if you can get into the website
         self.browser.get(self.server_url)
-        time.sleep(3)
         # Look at browswer title 
 
         self.assertIn('Value Investing Exchange',self.browser.title)
