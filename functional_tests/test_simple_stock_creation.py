@@ -77,7 +77,7 @@ class NewVisitorTest(FunctionalTest):
         self.assertIn('AAPL',page_text)
 
 
-        self.fail('All tests up to this point passed.  Keep testing...')  
+        #self.fail('Good to go')  
 
         #Other comments
 
