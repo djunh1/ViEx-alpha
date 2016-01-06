@@ -30,6 +30,11 @@
 					<form method="POST" action="{% block form_action %}{% endblock %}">
 						<input class= "form-control imput-lg" name="stock_input" id="id_stock_item" placeholder="Search stocks..."/>
 			{% csrf_token %}
+			{% if error %}
+					<div class='form-group has-error'>
+						<span class='help-block'>{{ error }}</span>
+					</div>
+			{% endif %}
 					</form>
 					</div>
 				</div>

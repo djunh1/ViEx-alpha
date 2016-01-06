@@ -16,10 +16,10 @@ class StockValidationTest(FunctionalTest):
 
         #Home page to refresh with error message
         error=self.browser.find_element_by_css_selector('.has-error')
-        self.assertEqual(error.text, "Please enter a stock to search")
+        self.assertEqual(error.text, "Please search for a valid stock symbol...")
 
         #Input a ticker.  Should work
-        self.browser.find_element_by_id('id_stock_item').send_keys('WAT')
+        self.browser.find_element_by_id('id_stock_item').send_keys('WAT\n')
         self.check_row_in_table('1: WAT')
 
         #Put in another blank item.  Warning appears
@@ -27,10 +27,10 @@ class StockValidationTest(FunctionalTest):
 
         self.check_row_in_table('1: WAT')
         error=self.browser.find_element_by_css_selector('.has-error')
-        self.assertEqual(error.text, "Please enter a stock to search")
+        self.assertEqual(error.text, "Please search for a valid stock symbol...")
         
         #Eliminate error by inputting text
-        self.browser.find_element_by_id('id_stock_item').send_keys('GTAT')
+        self.browser.find_element_by_id('id_stock_item').send_keys('GTAT\n')
         self.check_row_in_table('1: WAT')
         self.check_row_in_table('2: GTAT')
 

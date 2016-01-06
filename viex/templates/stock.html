@@ -2,7 +2,7 @@
 
 {% block header_text %}Your stock list{% endblock %}
 
-{% block form_action %}/stocks/{{ stocks.id }}/add_stock{% endblock %}
+{% block form_action %}{% url 'view_stocks' stocks.id %}{% endblock %}
 
 {% block table %}
     <table id="id_stock_table" class="table">

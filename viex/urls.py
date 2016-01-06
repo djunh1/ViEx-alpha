@@ -14,12 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 from django.conf.urls import include, url
-from django.contrib import admin
 
 from viex import views
 
 urlpatterns = [
     url(r'^new$',views.new_stock, name='new_stock'),
     url(r'^(\d+)/$',views.view_stocks,name='view_stocks'),
-    url(r'^(\d+)/add_stock$',views.add_stock,name='add_stock'),
 ]
