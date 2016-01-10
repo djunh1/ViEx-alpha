@@ -15,9 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 
-from viex import views
+from stockData import views
 
 urlpatterns = [
-    url(r'^new$',views.new_stock, name='new_stock'),
-    url(r'^(\d+)/$',views.view_stocks,name='view_stocks'),
+    #url(r'^(\d+)/',views.view_stocks,name='view_stocks'),
 ]

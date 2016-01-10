@@ -16,12 +16,12 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from viex import views as stock_views
-from viex import urls as stock_urls
+from stockData import views as stock_views
+from stockData import urls as stock_urls
 
 
 urlpatterns = [
     url(r'^$', stock_views.home_page, name='home'),
-    url(r'^stocks/',include(stock_urls)),
+    #url(r'^stocks/',include(stock_urls)),
     #url(r'^admin/', include(admin.site.urls)),
 ]

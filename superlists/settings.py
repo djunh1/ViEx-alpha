@@ -8,6 +8,10 @@ https://docs.djangoproject.com/en/1.8/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
+
+TO DO:
+
+1- config file to hide password
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -37,7 +41,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'viex',
+    'django.contrib.admin',
+    'stockData',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -77,8 +82,12 @@ WSGI_APPLICATION = 'superlists.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, '../database/db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'VIEX_stock_data',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'PORT': '',
     }
 }
 

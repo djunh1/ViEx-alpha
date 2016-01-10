@@ -6,76 +6,43 @@ from .base import FunctionalTest
 
 
 class NewVisitorTest(FunctionalTest): 
-    def test_can_start_a_list_and_retrieve_it_later(self):  
+
+    def test_can_search_stocks_and_get_information(self):  
+        '''
+        This will check basic functionality of inputting and searching for stock information from
+        the MySQL DB. 
+
+        TO DO -
+
+        Eventually expand this test to include the "facts" once they are designed.  For now, stick
+        to just the raw SQL data. 
+        '''
         # Check to see if you can get into the website
         self.browser.get(self.server_url)
-        # Look at browswer title 
 
+        # Check that browser title is correct ( this shows that the right page is loaded)
         self.assertIn('Value Investing Exchange',self.browser.title)
         header_text=self.browser.find_element_by_tag_name('h1').text
         self.assertIn('Search for a stock',header_text)
 
-        #Enter an item into the text box
-        inputbox=self.browser.find_element_by_id('id_stock_item')
-        self.assertEqual(inputbox.get_attribute('placeholder'),'Search stocks...')
+        #Enter a stock into a text box -  In this case, lets check out Seadrill ticker SDRL
 
-        #Type NOV into a text box
-        inputbox.send_keys('NOV')
-
-        #When entered, NOV should appear on the sceen
-        inputbox.send_keys(Keys.ENTER)
-        stock_url=self.browser.current_url
-        #Make the url as follows
-        self.assertRegex(stock_url,'/stocks/.+')
-        self.check_row_in_table('1: NOV')
+        inputbox=self.browser.find_element_by_id
 
 
-        #Type SLCA into a text box
-        inputbox=self.browser.find_element_by_id('id_stock_item')
-        inputbox.send_keys('SLCA')
-        #When entered, SLCA should appear on the sceen
-        inputbox.send_keys(Keys.ENTER)
+        #Here is what needs to come up.  Check the URL, and rows in the table
 
-        self.check_row_in_table('2: SLCA')
-        self.check_row_in_table('1: NOV')
+        #Type another stock into the text box
 
-        
-        #New User should arrive to home page and see nothing
+        #Check what comes up.  Check URL etc
 
-        self.browser.get(self.server_url)
-        page_text=self.browser.find_element_by_tag_name('body').text
-        self.assertNotIn('NOV',page_text)
-        self.assertNotIn('SLCA',page_text)
+        #Close browser.  User should see normal home page where they can enter a stock
 
-        #At this point, the user ends their session
-        self.browser.quit()
-        self.browser=webdriver.Firefox()
-
-        #Fire up a new session
-        self.browser.get(self.server_url)
-        page_text=self.browser.find_element_by_tag_name('body').text
-        self.assertNotIn('NOV', page_text)
-        self.assertNotIn('SLCA', page_text)
-
-        #New User starts new stock list
-
-        inputbox=self.browser.find_element_by_id('id_stock_item')
-        inputbox.send_keys('AAPL')
-        inputbox.send_keys(Keys.ENTER)
-
-        #New User gets thier own URL
-        newUser_list_url=self.browser.current_url
-        self.assertRegex(newUser_list_url,'/stocks/.+')
-        self.assertNotEqual(newUser_list_url,stock_url)
-
-        #Checking there is no previous list here
-
-        page_text=self.browser.find_element_by_tag_name('body').text
-        self.assertNotIn('NOV',page_text)
-        self.assertIn('AAPL',page_text)
+        #New user should see their unique stock selection and their own data.  Make sure previous 
+        #Input is gone as well
 
 
-        #self.fail('Good to go')  
+        self.fail('Continue writing tests')  
 
         #Other comments
 

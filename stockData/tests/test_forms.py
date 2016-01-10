@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from viex.forms import StockForm, EMPTY_ITEM_ERROR
+from stockData.forms import StockForm, EMPTY_ITEM_ERROR
 
 
 class StockFormTest(TestCase):
