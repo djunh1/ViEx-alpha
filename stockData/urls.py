@@ -18,5 +18,6 @@ from django.conf.urls import include, url
 from stockData import views
 
 urlpatterns = [
+    url(r'^[A-Za-z.]{0,5}$', views.stock_data_search_display, name='stock_data_search_display'),
     #url(r'^(\d+)/',views.view_stocks,name='view_stocks'),
 ]

@@ -22,6 +22,6 @@ from stockData import urls as stock_urls
 
 urlpatterns = [
     url(r'^$', stock_views.home_page, name='home'),
-    #url(r'^stocks/',include(stock_urls)),
+    url(r'^stocks/',include(stock_urls)),
     #url(r'^admin/', include(admin.site.urls)),
 ]

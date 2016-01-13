@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
 
-{% block header_text %}Your stock list{% endblock %}
+{% block header_text %}Results for stock {{ticker}}{% endblock %} 
 
-{% block form_action %}{% url 'view_stocks' stocks.id %}{% endblock %}
+<!-- This is the URL to view the stock data.  rather than stock ID, use the ticker here if able-->
+{% block form_action %}{% url 'stock_data_search_display' %}{% endblock %}
 
 {% block table %}
     <table id="id_stock_table" class="table">
-        {% for stock in stocks.stock_set.all %}
-            <tr><td>{{ forloop.counter }}: {{ stock.text }}</td></tr>
-        {% endfor %}
+        {% for item in eps %}
+            <tr>
+            	<td>{{ item.0 |date}}</td><td>{{ item.1 |floatformat:2 }}</td>
+            </tr>
+       {% empty %}
+       	<span class='help-block'>No EPS data available</span>
+       {% endfor %}
     </table>
-{% endblock  
+{% endblock  %}

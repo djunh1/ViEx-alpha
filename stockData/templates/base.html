@@ -29,12 +29,13 @@
 					<h1>{% block header_text %}{% endblock%}</h1>
 					<form method="POST" action="{% block form_action %}{% endblock %}">
 						{{form.text}}
-			{% csrf_token %}
-			{% if form.error %}
+						{% csrf_token %}
+					<input type="SUBMIT" value="Search Stock" class='btn btn-lg btn-warning'>
+					{% if form.errors %}
 					<div class='form-group has-error'>
-						<span class='help-block'>{{ form.text.error }}</span>
+						<span class='help-block'>{{ form.text.errors }}</span>
 					</div>
-			{% endif %}
+					{% endif %}
 					</form>
 					</div>
 				</div>

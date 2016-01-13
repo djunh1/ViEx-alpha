@@ -31,3 +31,6 @@ class FunctionalTest(StaticLiveServerTestCase):
     def tearDown(self):  
         self.browser.quit()
 
+    def get_stock_input_box(self):
+        return self.browser.find_element_by_id('id_text')
+
