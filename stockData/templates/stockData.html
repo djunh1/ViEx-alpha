@@ -14,5 +14,19 @@
        {% empty %}
        	<span class='help-block'>No EPS data available</span>
        {% endfor %}
+
+       {% for item in fcf %}
+            <tr>
+            	<td>FCF {{ item |floatformat:2 }}</td>
+            </tr>
+       {% empty %}
+       	<span class='help-block'>No FCF data available</span>
+       {% endfor %}
+       <tr>
+        <td>NCAV {{ncav |floatformat:2}}</td>
+       </tr>
+       <tr>
+        <td>NNWC {{netnet |floatformat:2}}</td>
+       </tr>
     </table>
 {% endblock  %}

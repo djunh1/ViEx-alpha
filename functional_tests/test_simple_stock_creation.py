@@ -27,7 +27,9 @@ class NewVisitorTest(FunctionalTest):
 
         #Enter a stock into a text box -  In this case, lets check out Seadrill ticker SDRL
 
-        inputbox=self.browser.find_element_by_id
+        inputbox=self.get_stock_input_box()
+
+        inputbox.send_keys('SDRL')
 
 
         #Here is what needs to come up.  Check the URL, and rows in the table
