@@ -19,9 +19,12 @@ from django.contrib import admin
 from stockData import views as stock_views
 from stockData import urls as stock_urls
 
+from accounts import urls as account_urls
+
 
 urlpatterns = [
     url(r'^$', stock_views.home_page, name='home'),
     url(r'^stocks/',include(stock_urls)),
+    url(r'^accounts/',include(account_urls)),
     #url(r'^admin/', include(admin.site.urls)),
 ]

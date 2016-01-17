@@ -18,6 +18,40 @@
 		<!-- import jQuery etc -->
 		<script type="text/javascript" src='http://code.jquery.com/jquery.min.js'></script>
 		<script type="text/javascript" src='/static/stockData.js'></script>
+		<script src="https://login.persona.org/include.js"></script>
+		<script type="text/javascript">
+		    $(document).ready(function() {
+
+			var loginLink = document.getElementById('login');
+			if (loginLink) {
+			  loginLink.onclick = function() { navigator.id.request(); };
+			}
+
+			var logoutLink = document.getElementById('logout');
+			if (logoutLink) {
+			  logoutLink.onclick = function() { navigator.id.logout(); };
+			}
+
+			var currentUser = '{{ user.email }}' || null;
+			var csrf_token = '{{ csrf_token }}';
+			console.log(currentUser);
+
+			navigator.id.watch({
+			  loggedInUser: currentUser,
+			  onlogin: function(assertion) {
+			    $.post('/accounts/login', {assertion: assertion, csrfmiddlewaretoken: csrf_token})
+			    .done(function() { window.location.reload(); })
+			    .fail(function() { navigator.id.logout();});
+			  },
+			  onlogout: function() {
+			    $.post('/accounts/logout')
+			    .always(function() { window.location.reload(); });
+			  }
+			});
+
+			});
+
+		</script>
 
     	<!-- Check settings.py.  Need to start at the static directory -->
         <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -26,6 +60,16 @@
 	</head>
 	<body>
 		<div class="container">
+			<div class="navbar">
+	        {% if user.email %}
+	            <p>Logged in as {{ user.email}}</p>
+	            <p><a id="logout" href="{% url 'logout' %}">Sign out</a></p>
+	        {% else %}
+	            <a href="#" id="login">Sign in</a>
+	        {% endif %}
+	        <p>User: {{user}}</p>
+  		  </div>
+
 		
 			<div class='row'>
 				<div class='col-sm-6 col-sm-offset-3 jumbotron'>
