@@ -1,30 +1,18 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 
 
-
-class ViexUserManager(BaseUserManager):
-
-	def create_user(self,email):
-		ViexUser.objects.create(email=email)
-
-	def create_superuser(self,email,password):
-		self.create_user(email)
-		
-
-class ViexUser(AbstractBaseUser,PermissionsMixin):
+class User(models.Model):
 	email=models.EmailField(primary_key=True)
+	last_login=models.DateTimeField(default=timezone.now)
+	REQUIRED_FIELDS = ()
 	USERNAME_FIELD='email'
 
-	objects=ViexUserManager()
-
-	@property 
-	def is_staff(self):
-		return self.email == 'douglas.jacobson@djunh.com'
-
-	@property
-	def is_active(self):
+	def is_authenticated(self):
 		return True
+
+
 

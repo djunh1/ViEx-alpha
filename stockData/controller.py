@@ -61,7 +61,9 @@ class mySQLdb_query(object):
 		soData=self.get_statement_data(self.shareOutstanding)
 
 		#list(['test' if v is None else v for v in list(acctInentory)])
-	
+		
+		#judgeaway
+
 		netnetCap=[]
 		for d,r,y,z,o in zip(cashAndEquiv,acctRecievables,acctInentory,totsLiabData,soData):
 			

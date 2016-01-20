@@ -10,7 +10,7 @@ Using custom controller with own MYSQL queries.  Don't hate.
 
 TO DO-
 
-1- WRite a test for no data.  
+1- WRite a test for no data.  DONE 
 2- Write the template for a stock not being found
 '''
 def home_page(request):

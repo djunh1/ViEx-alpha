@@ -18,7 +18,6 @@ from django.contrib import admin
 
 from stockData import views as stock_views
 from stockData import urls as stock_urls
-
 from accounts import urls as account_urls
 
 

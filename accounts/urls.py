@@ -1,8 +1,9 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+from django.contrib.auth.views import logout
+from accounts import views
 
 
 urlpatterns = [
-    url(r'^login$', 'accounts.views.login', name='login'),
-    url(r'^logout$', 'accounts.views.logout', name='logout'),
-    #url(r'^(\d+)/',views.view_stocks,name='view_stocks'),
+    url(r'^login$', views.persona_login, name='persona_login'),
+    #url(r'^logout$', 'accounts.views.logout', name='logout'),
 ]

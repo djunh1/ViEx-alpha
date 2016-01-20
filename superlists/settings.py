@@ -31,6 +31,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['']
 
+DOMAIN='localhost'
+#DOMAIN = 'staging.valueinvestingexchange.com'
+
+ALLOWED_HOSTS=[DOMAIN]
+
 
 # Application definition
 
@@ -44,9 +49,10 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'stockData',
     'accounts',
+    'functional_tests',
 )
 
-AUTH_USER_MODEL = 'accounts.ViexUser'
+AUTH_USER_MODEL = 'accounts.User'
 AUTHENTICATION_BACKENDS = (
     'accounts.authentication.PersonaAuthenticationBackend',
 )
@@ -134,3 +140,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT=os.path.abspath(os.path.join(BASE_DIR, '../static'))
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'superlists', 'static'),
+)
