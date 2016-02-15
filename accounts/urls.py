@@ -5,5 +5,5 @@ from accounts import views
 
 urlpatterns = [
     url(r'^login$', views.persona_login, name='persona_login'),
-    #url(r'^logout$', 'accounts.views.logout', name='logout'),
+    url(r'^logout$', logout, {'next_page':'/'}, name='logout'),
 ]

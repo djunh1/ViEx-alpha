@@ -14,7 +14,7 @@ TO DO-
 2- Write the template for a stock not being found
 '''
 def home_page(request):
-	return render(request,'home.html', {'form': StockForm()})
+	return render(request,'base.html', {'form': StockForm()})
 
 def stock_data_search_display(request):
 	form=StockForm()
@@ -39,4 +39,4 @@ def stock_data_search_display(request):
 			
 				return render(request,'stockData.html',{'eps': epsData , 'fcf': fcfData, 'ncav': ncavData, 'netnet':netnetData,"form":form , "ticker":ticker})
 	
-	return render(request,'home.html',{ "form":form })
+	return render(request, 'base.html', { "form":form })
