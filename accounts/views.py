@@ -1,7 +1,12 @@
-from rest_framework import permissions, viewsets
+import json
+
+from django.contrib.auth import authenticate, login, logout
+
+from rest_framework import permissions, viewsets, status, views
+from rest_framework.response import Response
 
 from accounts.models import User
-from accounts.permissions import IsAccountOwner
+from accounts.permissions import IsUserOwner
 from accounts.serializers import UserSerializer
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -16,7 +21,7 @@ class UserViewSet(viewsets.ModelViewSet):
 		if self.request.method == 'POST':
 			return (permissions.AllowAny(),)
 
-		return (permissions.IsAuthenticated(), IsAccountOwner(),)
+		return (permissions.IsAuthenticated(), IsUserOwner(),)
 
 	def create(self,request):
 		serializer=self.serializer_class(data=request.data)
@@ -26,10 +31,53 @@ class UserViewSet(viewsets.ModelViewSet):
 
 			return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
 
-		return response({
-			'status' : 'Bad request',
+		return Response({
+			'status' : 'Bad request.',
 			'message' : 'Account could not be created with recieved data.'
 		}, status=status.HTTP_400_BAD_REQUEST)
 
 
+class LoginView(views.APIView):
+	def post(self, request, format=None):
 
+		data = json.loads(request.body.decode("utf-8"))
+
+		email = data.get('email', None)
+		password = data.get('password', None)
+
+		print(data.get('email', None))
+
+		account = authenticate(email=email, password=password)
+
+		print(account)
+
+		serialized = UserSerializer(account)
+
+		print(serialized.data)
+
+		if account is not None:
+			if account.is_active:
+				login(request, account)
+
+				serialized = UserSerializer(account)
+
+				return Response(serialized.data)
+
+			else:
+				return Response({
+					'status': 'Unauthorized',
+					'message': 'This account has been disabled.'
+				}, status=status.HTTP_401_UNAUTHORIZED)
+		else:
+			return Response({
+				'status': 'Unauthorized',
+				'message': 'Username or Password combination is invalid.'
+			}, status=status.HTTP_401_UNAUTHORIZED)
+
+class LogoutView(views.APIView):
+	permission_classes = (permissions.IsAuthenticated, )
+
+	def post(self, request, format=None):
+		logout(request)
+
+		return Response({}, status=status.HTTP_204_NO_CONTENT)

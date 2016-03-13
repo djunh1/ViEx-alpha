@@ -1,0 +1,99 @@
+
+
+
+<div class="section hero-info">
+    <div class="container">
+		<h1 class="color1 section-title">Frequently Asked Questions </h1>
+        <div class="row">
+
+			<div class="col-sm-2 faq_questions_tabs">
+		      <h2>Topics</h2>
+		        <ul class="nav nav-pills nav-stacked">
+				  <li role="presentation"><a href="#section-0-0">General Topics</a></li>
+				  <li role="presentation"><a href="#section-0-1">Contributing</a></li>
+				  <li role="presentation"><a href="#section-0-2">Peer review</a></li>
+				  <li role="presentation"><a href="#section-0-3">Due Dilligence</a></li>
+				  <li role="presentation"><a href="#section-0-4">Topic #1</a></li>
+				  <li role="presentation"><a href="#section-0-5">Topic #2</a></li>
+		       </ul>
+		   </div>
+
+		<div class="col-sm-10 faq_questions">
+		  <h2 id="section-0-0">General Questions</h2>
+		  <ul>
+			<li>
+				<div>
+					<h3><a href="#" id="q0">What is the Value Investing Exchange?</a></h3>
+						<div style="display: block;" >
+						<p id="a0" style="display: none">
+						The Value Investing Exchange is an online content aggregator with a goal of providing users
+							with accurate and useful financial information on publically traded companies.
+						</p>
+					    </div>
+		   		</div>
+			</li>
+			<li>
+			<div>
+					<h3><a href="#" id="q1">Discuss financial data..</a></h3>
+						<div style="display: block;" >
+						<p id="a1" style="display: none">
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+						</p>
+					</div>
+		   		</div>
+			</li>
+			<li>
+				<div>
+					<h3><a href="#" id="q2">How do I contribute??</a></h3>
+						<div style="display: block;" >
+						<p id="a2" style="display: none">
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+						</p>
+					</div>
+		   		</div>
+			</li>
+		  </ul>
+		</div>
+		</div>
+	</div>
+</div>
+
+<!-- TO DO --
+1- Move the dom manipulations out of the damn view!
+
+-->
+
+<script>
+		    $(document).ready(function() {
+	    	$('#q0').on('click',function (event) {
+			event.stopPropagation();
+		    event.preventDefault();
+			$('#a0').slideToggle("slow")
+		});
+	    	$('#q1').on('click',function (event) {
+			event.stopPropagation();
+		    event.preventDefault();
+			$('#a1').slideToggle("slow")
+		});
+	    	$('#q2').on('click',function (event) {
+			event.stopPropagation();
+		    event.preventDefault();
+			$('#a2').slideToggle("slow")
+		});
+
+    });
+</script>
+
+
+
+

@@ -1,0 +1,53 @@
+<div class="section login-section">
+  <div class="container">
+    <div class="row">
+      <h1 class="color1 section-title">Create Account</h1>
+      <div class="col-md-6">
+
+
+        <div class="well-login">
+          <form role="form" ng-submit="vm.register()">
+            <div class="form-group">
+              <label for="register__email">Email</label>
+              <input type="email" class="form-control input-lg" id="register__email" ng-model="vm.email" placeholder="@gmail.com" />
+            </div>
+
+            <div class="form-group">
+              <label for="register__username">Username</label>
+              <input type="text" class="form-control input-lg" id="register__username" ng-model="vm.username" placeholder="Enter user name" />
+            </div>
+
+            <div class="form-group">
+              <label for="register__password">Create Password</label>
+              <input type="password" class="form-control input-lg" id="register__password" ng-model="vm.password" placeholder="" />
+            </div>
+            <div class="form-group">
+              <label for="confirm__password">Confirm Password</label>
+              <input type="password" class="form-control input-lg" id="confirm__password" ng-model="vm.password" placeholder="" />
+            </div>
+
+            <p>Captcha Login</p>
+            <div class="row register-agreement">
+                    <label class="label-body" for="valueExchange-agreement">
+                        <input id="valueExchange-agreement" class="agreement-checkbox" type="checkbox" >
+                        I agree to the Value Investing Exchange
+                        <a id="blank" target="_blank" href="/termsandconditions">terms and conditions</a>
+
+                    </label>
+                </div>
+
+            <div class="form-group">
+              <button type="submit" class="button button-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h3>Access to posting, searches and much more!</h3>
+        <p>A free account allows contributing.  You can still browse our stock database without an account</p>
+
+        <hr>
+      </div>
+    </div>
+  </div>
+</div>

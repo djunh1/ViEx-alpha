@@ -1,0 +1,119 @@
+
+
+
+<div class="container">
+		<div class="row">
+			<div class="col-lg-6 search-input">
+				<div class="input-group">
+				  <span class="input-group-btn ">
+					<button class="btn btn-default button-search" type="button">Search</button>
+				  </span>
+				  <input type="text" class="form-control input-lg" placeholder="Search stocks...">
+
+				</div>
+		    </div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="well-stock-search">
+				<div class="row">
+					<div class="col-md-6">
+						<h3>SDRL</h3>
+						<h5>SeaDrill Ltd.</h5>
+					</div>
+					<div class="col-md-6">
+
+
+					<img src="http://chart.finance.yahoo.com/t?s=SDRL&amp;lang=en-US&amp;region=US&amp;width=300&amp;height=180"
+						 alt="SeaDrill Limited (SDRL)" width="350" height="250" class="stock-img">
+					</div>
+				</div>
+                </div>
+			</div>
+		</div>
+		<div class="row">
+
+				<div class='breadcrumbs'>
+				  <div class='inner'>
+					<ul class='cf'>
+					  <li ng-repeat="tab in tabs" ng-click="onClickTab(tab)">
+						<a ng-class="{active:isActiveTab(tab.url)}">
+						  <span>{{tab.number}}</span><br>
+						  <span>{{tab.title}}</span>
+						</a>
+					  </li>
+					</ul>
+				  </div>
+				</div>
+
+		</div>
+
+        <div class="post_section" id="mainView">
+            <div ng-include="currentTab"></div>
+		</div>
+</div>
+
+
+
+
+
+</div>
+
+<script>
+    $(document).ready(function() {
+         $('.button-search-stocks').on('click', function() {
+        $('.ex_hero_stocks').toggleClass('isOpen');
+         });
+    });
+</script>
+
+<script type="text/ng-template" id="one.tpl.html">
+		<div id="viewOne">
+			<h1>Business Overview</h1><hr>
+			<p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc.</p>
+		</div>
+</script>
+
+<script type="text/ng-template" id="two.tpl.html">
+		<div id="viewTwo">
+			<h1>Management Assessment</h1><hr>
+			<p>Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu.</p>
+		</div>
+</script>
+
+<script type="text/ng-template" id="three.tpl.html">
+		<div id="viewThree">
+			<h1>Financial Considerations</h1><hr>
+			<p>In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet egestas purus in blandit. Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu.</p>
+		</div>
+</script>
+
+<script type="text/ng-template" id="four.tpl.html">
+		<div id="viewFour">
+			<h1>Customer Assessment</h1><hr>
+			<p>In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet egestas purus in blandit. Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu.</p>
+		</div>
+</script>
+
+<script type="text/ng-template" id="five.tpl.html">
+		<div id="viewFive">
+			<h1>Company's Product and Services</h1><hr>
+			<p>In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet egestas purus in blandit. Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu.</p>
+		</div>
+</script>
+
+<script type="text/ng-template" id="six.tpl.html">
+		<div id="viewSix">
+			<h1>Industry Assessment</h1><hr>
+			<p>In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet egestas purus in blandit. Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu.</p>
+		</div>
+</script>
+
+<script type="text/ng-template" id="seven.tpl.html">
+		<div id="viewSeven">
+			<h1>Future Growth Prospects</h1><hr>
+			<p>In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet egestas purus in blandit. Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu.</p>
+		</div>
+</script>
+
+

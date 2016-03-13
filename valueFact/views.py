@@ -1,41 +1,34 @@
-from django.shortcuts import render, get_object_or_404
-from django.utils import timezone
+from rest_framework import permissions, viewsets
+from rest_framework.response import Response
 
-from .models import ValueFactPost
-from .forms import ValueFactForm
+from valueFact.models import ValueFactPost
+from valueFact.serializers import ValueFactPostSerializer
+from valueFact.permissions import IsAuthorOfValueFact
 
-def post_valueFact(request):
-    valueFacts = ValueFactPost.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
-    return render(request, 'valueFact.html',{'valueFacts':valueFacts})
 
-def valueFact_detail(request,pk):
-    valuefact=get_object_or_404(ValueFactPost,pk=pk)
-    return render(request, 'valueFact_detail.html', {'valuefact':valuefact})
+class ValueFactViewSet(viewsets.ModelViewSet):
+    queryset = ValueFactPost.objects.order_by('-created_date')
+    serializer_class = ValueFactPostSerializer
 
-def valueFact_new(request):
-    if request.method=="POST":
-        form = ValueFactForm(request.POST)
-        if form.is_valid():
-            valuefact=form.save(commit=False)
-            valuefact.author=request.user
-            valuefact.published_date=timezone.now()
-            valuefact.save()
+    def get_permissions(self):
+        if self.request.method in permissions.SAFE_METHODS:
+            return (permissions.AllowAny(),)
+        return (permissions.IsAuthenticated(), IsAuthorOfValueFact(),)
 
-    else:
-        form=ValueFactForm()
 
-    return render(request, 'valueFact_edit.html', {'valueform':form})
+def perform_create(self, serializer):
+    instance = serializer.save(author=self.request.user) #is it user?
 
-def valueFact_edit(request,pk):
-    valuefact=get_object_or_404(ValueFactPost,pk=pk)
-    if request.method == "POST":
-        form=ValueFactForm(request.POST, instance=post)
-        if form.is_valid():
-            valuefact=form.save(commit=False)
-            valuefact.author=request.user
-            valuefact.published_date=timezone.now()
-            valuefact.save()
-            return redirect('valuefact_detail', pk=valuefact.pk)
-    else:
-        form=ValueFactForm(instance=valuefact)
-    return render(request, 'valueFact_edit.html', {'valueform': form})
+    return super(ValueFactViewSet, self).perform_create(serializer)
+
+
+class AccountPostsViewSet(viewsets.ViewSet):
+    #Change to view for a specific stock and segment
+    queryset = ValueFactPost.objects.select_related('author').all()
+    serializer_class = ValueFactPostSerializer
+
+    def list(self, request, account_username=None):
+        queryset = self.queryset.filter(author__username=account_username)
+        serializer = self.serializer_class(queryset, many=True)
+
+        return Response(serializer.data)

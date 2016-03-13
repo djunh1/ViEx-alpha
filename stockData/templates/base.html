@@ -1,1 +1,33 @@
 {% extends 'index.html' %}
+
+<div class='row'>
+				<div class='col-sm-6 col-sm-offset-3 jumbotron'>
+					<div class='text-center'>
+					<h1>{% block header_text %}{% endblock%}</h1>
+					<form method="POST" action="{% block form_action %}{% endblock %}">
+						{{form.text}}
+						{% csrf_token %}
+					<input type="SUBMIT" value="Search Stock" class='btn btn-lg btn-warning'>
+					{% if form.errors %}
+					<div class='form-group has-error'>
+						<span class='help-block'>{{ form.text.errors }}</span>
+					</div>
+					{% endif %}
+					</form>
+					</div>
+				</div>
+			</div>
+
+		<div class='row'>
+			<div class='col-md-6 col-md-offset-3'>
+				{% block table%}
+				{% endblock %}
+			</div>
+		</div>
+
+		<div class="row">
+			<div class='col-md-7 col-md-offset-1'>
+				{% block fact%}
+				{% endblock %}
+			</div>
+		</div>

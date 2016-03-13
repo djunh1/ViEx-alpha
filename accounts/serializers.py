@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'username', 'created_at', 'updated_at',
+        fields = ( 'email', 'username', 'created_at', 'updated_at',
                 'first_name', 'last_name', 'tagline', 'password',
                 'confirm_password', )
         read_only_fields = ('created_at', 'updated_at')
@@ -31,7 +31,7 @@ class UserSerializer(serializers.ModelSerializer):
                 instance.set_password(password)
                 instance.save()
 
-            update_session_auth_hash(self.context.get('request'),instance)
+            update_session_auth_hash(self.context.get('request'), instance)
 
             return instance
 

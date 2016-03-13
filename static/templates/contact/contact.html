@@ -1,0 +1,59 @@
+<div class="section ex_hero_faq">
+	  <div class="container">
+          <h1 class="color1 section-title">Contact</h1>
+		  <div class="col-sm-6">
+			 <div class="dark textbox_faq">
+		        <h2>Get in touch</h2>
+
+		        <p>For information about our site, questions about how it works, the best way to get in touch with us
+        is by submitting this form.  We will get back to you as soon as we are able, usually within a few business days.</p>
+
+        <p>
+            Please use this form for bug reporting, or features that might improve this site.
+        </p>
+
+			  </div>
+		  </div>
+	  	 <div class="col-sm-6">
+
+	    <form class="std-form std-form-welcome" name="form" ng-submit="register(form)" novalidate>
+
+	      <div class="form-group">
+	      	 <label for="selectOption">Please select a problem</label>
+			  <select class="form-control input-lg" id="selectOption">
+			      <option>General Problem</option>
+				  <option>Missing Stock or No stock listed</option>
+				  <option>Incorrect financial information</option>
+				  <option>Problem with the website</option>
+				  <option>User Experience</option>
+			  </select>
+			<br>
+		  </div>
+            <div class="form-group">
+              <label for="email">From</label>
+              <input type="email" class="form-control input-lg" placeholder="Email">
+          </div>
+		  <div class="form-group" ng-class="{ 'has-success': form.textArea.$valid && submitted, 'has-error': form.textArea.$invalid && submitted }">
+	         <label for="customerMessage">Enter Message</label>
+
+	          <textarea type="text" class="form-control" rows="5" id="customerMessage"
+	          placeholder="Enter message here.."
+	          name="textArea"
+	          ng-model="user.textArea"
+	          required
+	          ng-minlength="6"></textarea>
+	          <p class="help-block" ng-show="form.textArea.$error.required && form.$submitted">Please leave a message</p>
+	          <p class="help-block user-agree"
+              ng-show="(form.textArea.$error.minlength || form.textArea.$error.required)">
+              Message is too short
+             </p>
+	       </div>
+	         <div class="form-group tightRow">
+                  <button type="submit" class="button button-primary">Submit Problem</button>
+                </div>
+	     </form>
+
+	</div>
+	  </div>
+</div>
+

@@ -1,0 +1,38 @@
+<div class="section login-section">
+  <div class="container">
+    <div class="row">
+      <h1 class="color1 section-title">Value Investing Exchange Account</h1>
+      <div class="col-md-4 col-md-offset-4">
+        <h3>Sign in with your account</h3>
+
+        <div class="well-login">
+          <span class="fa fa-user"></span>
+          <form role="form" ng-submit="vm.login()">
+            <div class="alert alert-danger" ng-show="error" ng-bind="error"></div>
+
+            <div class="form-group">
+              <input type="text" class="form-control input-lg" id="login__email" ng-model="vm.email" placeholder="Email" />
+            </div>
+
+            <div class="form-group">
+
+              <input type="password" class="form-control input-lg" id="login__password" ng-model="vm.password" placeholder="Password" />
+            </div>
+
+            <div class="form-group">
+              <button type="submit" class="button button-primary">Submit</button>
+
+            </div>
+            <div class="form-group">
+              <a href="/faq" class="alignRight">help</a>
+            </div>
+
+
+          </form>
+
+        </div>
+        <a href="/register" class="loginLink">Create an account</a>
+      </div>
+    </div>
+  </div>
+</div>
