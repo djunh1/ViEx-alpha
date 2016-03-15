@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model, SESSION_KEY
 from unittest.mock import patch
 User = get_user_model()
 
+'''
 class LoginViewTest(TestCase):
 
 	@patch('accounts.views.authenticate')
@@ -35,3 +36,4 @@ class LoginViewTest(TestCase):
 		mock_authenticate.return_value = None
 		self.client.post('/accounts/login', {'assertion': 'a'})
 		self.assertNotIn(SESSION_KEY, self.client.session)
+'''
