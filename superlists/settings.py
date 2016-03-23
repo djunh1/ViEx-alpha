@@ -64,7 +64,7 @@ INSTALLED_APPS = (
     'valueFact',
 )
 
-AUTH_USER_MODEL = 'auth.User'
+AUTH_USER_MODEL = 'accounts.User'
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
