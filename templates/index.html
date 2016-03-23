@@ -16,38 +16,22 @@
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Droid+Serif:regular,bold"/>
 
-
-
-
     	<!-- Check settings.py.  Need to start at the static directory -->
         {% include 'stylesheets.html' %}
-
-
 
 		<title>Value Investing Exchange</title>
 		<base href="/">
 	</head>
-	<body  >
+	<body>
 
 
-		    {% include 'navbar.html' %}
-			<div ng-app="viex" class="cd-main-content">
-				<div class="ng-view"></div>
-			</div>
+			{% include 'navbar.html' %}
 
-			<!--div ng-app="viex.theExchangeApp">
-
-                 <div ui-view></div>
-
-           </div-->
 
 			{% include 'footer.html'%}
 
 
 			{% include 'javascript.html' %}
-
-
-
 
 	</body>
 </html>

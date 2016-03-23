@@ -1,5 +1,7 @@
+
 (function () {
   'use strict';
+
 
   angular
     .module('viex', [
@@ -10,7 +12,8 @@
       'viex.utils',
       'viex.valueFacts',
       'viex.profiles',
-      'viex.aboutfaq',
+      'viex.aboutfaq'
+
 
 
     ]);

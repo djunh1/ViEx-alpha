@@ -5,6 +5,9 @@ from django.db import connections
 from stockData.forms import StockForm
 from stockData.controller import mySQLdb_query
 
+from rest_framework import permissions, viewsets, status, views
+from rest_framework.response import Response
+
 '''
 Using custom controller with own MYSQL queries.  Don't hate.
 
@@ -13,8 +16,6 @@ TO DO-
 1- WRite a test for no data.  DONE 
 2- Write the template for a stock not being found
 '''
-def home_page(request):
-	return render(request,'base.html', {'form': StockForm()})
 
 def stock_data_search_display(request):
 	form=StockForm()
@@ -40,3 +41,5 @@ def stock_data_search_display(request):
 				return render(request,'stockData.html',{'eps': epsData , 'fcf': fcfData, 'ncav': ncavData, 'netnet':netnetData,"form":form , "ticker":ticker})
 	
 	return render(request, 'base.html', { "form":form })
+
+

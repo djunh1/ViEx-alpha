@@ -1,19 +1,5 @@
-<!--nav class="clearfix cd-header" ng-controller="NavbarController as vm">
-   <ul class="clearfix">
-        {% if user.is_authenticated %}
-          <li><a href="/stocks/"><span class="fa fa-search"> Search Stocks </a></li>
-          <li><a href="/+{{ user.username }}"><span class="fa fa-group"></span> {{ user.username }}</a></li>
-          <li><a href="/+{{ user.username }}/settings"><span class="fa fa-cogs"></span> Settings</a></li>
-          <li><a href="javascript:void(0)" ng-click="vm.logout()"><span class="fa fa-sign-out"></span> Logout</a></li>
-        {% else %}
-          <li><a href="/login"><span class="fa fa-sign-in"> Login</a></li>
-          <li><a href="/register"><span class="fa fa-user-plus"> Register</a></li>
-        {% endif %}
-   </ul>
 
-  <a href="" id="pull">Menu</a>
-</nav-->
-<div ng-controller="NavbarController as vm">
+<div>
 	<header>
 		<a id="cd-logo" class ="logo-link" href="/browse">Value Investing Exchange</a>
 		<nav id="cd-top-nav">
@@ -50,25 +36,25 @@
 		</ul> <!-- cd-navigation -->
 
 		<ul class="cd-navigation cd-single-item-wrapper">
-			<li><a href="/browse">Browse Stocks</a></li>
+			<li><a href="">Browse Stocks</a></li>
 			<li><a href="/login">Login</a></li>
 			<li><a href="/register">Register</a></li>
 
 		</ul> <!-- cd-single-item-wrapper -->
 
-		<ul class="cd-navigation cd-single-item-wrapper">
-			<li><a href="/faq">FAQ</a></li>
+		<ul class="cd-navigation cd-single-item-wrapper" >
+			<li><a href="#/faq" ng-class="{ on: isFaq }">FAQ</a></li>
 			<li><a href="/termsandconditions" target="_blank">Terms &amp; Conditions</a></li>
 			<li><a href="/contact">Contact</a></li>
 
 		</ul> <!-- cd-single-item-wrapper -->
 
-		<!--div class="cd-navigation socials">
-			<a href="#0"><span class="fa fa-facebook"></span></a>
+		<div class="cd-navigation socials">
+			<a class="cd-twitter " href="#0"></a>
 			<a class="cd-github cd-img-replace" href="#0"></a>
 			<a class="cd-facebook cd-img-replace" href="#0"></a>
 			<a class="cd-google cd-img-replace" href="#0"></a>
-		</div> -- socials -->
+		</div> <!-- socials -->
 	</nav>
 
 </div>

@@ -22,7 +22,7 @@
     /**
     * @name submit
     * @desc Create a new Post
-    * @memberOf thinkster.posts.controllers.NewPostController
+    * @memberOf viex.posts.controllers.NewPostController
     */
     function submit() {
       $rootScope.$broadcast('post.created', {

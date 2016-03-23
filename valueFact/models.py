@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 '''
 TO DO-
@@ -11,31 +12,55 @@ TO DO-
 
 class ValueFactPost(models.Model):
     value_fact_category = (
-        (1, u'Overall Business'),
-        (2, u'Management Assessment'),
-        (3, u'GAAP Financials'),
-        (4, u'Customer Assessment'),
-        (5, u'Product Assessment'),
-        (6, u'Industry Assessment'),
-        (7, u'Future Growth Outlook'),
+        ('overall_business', 'Overall_Business'),
+        ('management_assessment', 'Management_Assessment'),
+        ('gaap_financials', 'GAAP Financials'),
+        ('customer_assessment', 'Customer_Assessment'),
+        ('product_assessment', 'Product_Assessment'),
+        ('industry_assessment', 'Industry_Assessment'),
+        ('future_growth_outlook', 'Future_Growth_Outlook'),
+    )
+    STATUS_CHOICE = (
+        ('draft', 'Draft'),
+        ('published', 'Published')
     )
     '''A fact'''
     title = models.CharField(max_length=300)
-    author = models.ForeignKey('accounts.User') #Need to tie into a stock Eventually
-    published_date = models.DateTimeField(blank=True, null=True)
-    text = models.TextField()
-    created_date = models.DateTimeField(default=timezone.now)
+    slug = models.SlugField(max_length=300,unique_for_date='publish')
+    author = models.ForeignKey(User, related_name='valueFact_posts')
+    publish = models.DateTimeField(default=timezone.now)
+    body = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    #Add Foreign Key for stock when stock model is created
 
     #Status of post
 
-    #Voting data
-    score=models.IntegerField(default=0)
+    status = models.CharField(max_length=10,
+                              choices=STATUS_CHOICE,
+                              default='draft')
+
+    category = models.CharField(max_length=25,
+                                choices=value_fact_category,
+                                default='overall_business')
 
 
+    points = models.IntegerField(default=0, db_column='score')
+    vote_up_count = models.IntegerField(default=0)
+    vote_down_count = models.IntegerField(default=0)
 
-    def publish(self):
-        self.published_date=timezone.now()
-        self.save()
+    comment_count = models.PositiveIntegerField(default=0)
+
+    #Endorses value Facts
+
+    endorsed = models.BooleanField(default=False, db_index=True)
+    endorsed_by = models.ForeignKey(User, null=True, blank=True, related_name='endorsed_posts')
+    endorsed_at = models.DateTimeField(null=True, blank=True)
+
+
+    class Meta:
+        ordering = ('publish',)
 
     def __str__(self):
         return self.title

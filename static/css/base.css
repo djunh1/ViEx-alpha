@@ -1070,7 +1070,7 @@ header.is-fixed {
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
   right: 1em;
-  background: url("../img/cd-arrow.svg") no-repeat center center;
+  /*background: url("../img/cd-arrow.svg") no-repeat center center;*/
   background-size: 8px 11px;
   -webkit-transition-property: -webkit-transform;
   -moz-transition-property: -moz-transform;
@@ -1100,7 +1100,7 @@ header.is-fixed {
   width: 32px;
   float: left;
   padding: 0;
-  background-image: url("../img/cd-socials.svg");
+  /*background-image: url("../img/cd-socials.svg");*/
   background-repeat: no-repeat;
   background-size: 128px 64px;
   background-color: #FFF;

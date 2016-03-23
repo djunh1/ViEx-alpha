@@ -98,7 +98,7 @@
     * @desc Renders Posts into columns of approximately equal height
     * @param {Array} current The current value of `vm.posts`
     * @param {Array} original The value of `vm.posts` before it was updated
-    * @memberOf thinkster.posts.controllers.PostsController
+    * @memberOf viex.posts.controllers.PostsController
     */
     function render(current, original) {
       if (current !== original) {

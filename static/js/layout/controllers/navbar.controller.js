@@ -1,3 +1,7 @@
+/**
+* PageNavController
+* @namespace viex.layout.controllers
+*/
 (function () {
   'use strict';
 
@@ -24,4 +28,5 @@
       Authentication.logout();
     }
   }
+
 })();

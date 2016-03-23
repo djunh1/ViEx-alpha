@@ -38,6 +38,7 @@ SECRET_KEY=get_secret("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+#Once site is moved to production, add the host here.
 ALLOWED_HOSTS = ['']
 
 DOMAIN='localhost'
@@ -63,7 +64,7 @@ INSTALLED_APPS = (
     'valueFact',
 )
 
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'auth.User'
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -189,27 +190,9 @@ STATICFILES_FINDERS = (
 # BOWER Front end applications.  Add as needed
 
 BOWER_INSTALLED_APPS = (
-    'angular#1.3.1',
-    'angular-route#1.3.1',
-    'angular-cookies#1.3.1',
-    'ngDialog#0.3.3',
-    'snackbar',
     'underscore',
     "json3#~3.3.1",
     "es5-shim#~3.1.0",
-    "angular-resource#1.2.16",
-    "angular-sanitize#1.2.16",
-    "angular-animate#1.2.16",
-    "angular-touch#1.2.16",
-    "angular-route#1.2.16",
     "font-awesome#4.3.0",
-    "angular-bootstrap#0.12.0",
-    "oclazyload#~0.5.2",
-    "angular-loading-bar#~0.7.0",
-    "angular-ui-router#~0.2.13",
-    "angular-toggle-switch#~1.2.1",
-    "metisMenu#~1.1.3",
-    "angular-chart.js#~0.5.2",
-    "angular-mocks#1.2.16",
-    "angular-scenario#1.2.16"
+
 )

@@ -11,6 +11,8 @@
 
   IndexController.$inject = ['$scope', 'Authentication', 'Posts', 'Snackbar'];
 
+
+
   /**
   * @namespace IndexController
   */
