@@ -7,8 +7,12 @@ TO DO-
 
 1- Write Units tests
 2- Each of these must tie into a stock symbol.
-3- Design the posts for this site.  For now, generic post to get the point..
+
 '''
+
+class ValueFactManager(models.Manager):
+    def get_queryset(self):
+        return super(ValueFactManager, self).get_queryset().filter(status='published')
 
 class ValueFactPost(models.Model):
     value_fact_category = (
@@ -57,6 +61,9 @@ class ValueFactPost(models.Model):
     endorsed = models.BooleanField(default=False, db_index=True)
     endorsed_by = models.ForeignKey(User, null=True, blank=True, related_name='endorsed_posts')
     endorsed_at = models.DateTimeField(null=True, blank=True)
+
+    objects = models.Manager()
+    published = ValueFactManager()
 
 
     class Meta:
