@@ -626,6 +626,10 @@ border-right: 1px solid rgba(0, 0, 0, 0.2);
 //  04 - ValueFact CSS
 ///////////////////////////////////////////////////////////////////////*/
 
+.valueFact_views{
+   padding:0px;
+}
+
 .no-posts-here {
   text-align: center;
 }

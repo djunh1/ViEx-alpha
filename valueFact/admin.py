@@ -1,6 +1,12 @@
 from django.contrib import admin
 
-from .models import ValueFactPost
+from .models import ValueFactPost, Symbol
+
+class StockAdmin(admin.ModelAdmin):
+    list_display = ('ticker', 'instrument', 'name', 'sector')
+    list_filter = ('name', 'ticker', 'instrument')
+    search_fields = ('ticker', 'name')
+    ordering = ['ticker', 'name']
 
 class ValueFactAdmin(admin.ModelAdmin):
     list_display = ('title', 'category', 'slug', 'author', 'publish', 'status')
@@ -12,3 +18,4 @@ class ValueFactAdmin(admin.ModelAdmin):
     ordering = ['status', 'publish']
 
 admin.site.register(ValueFactPost, ValueFactAdmin)
+admin.site.register(Symbol, StockAdmin)

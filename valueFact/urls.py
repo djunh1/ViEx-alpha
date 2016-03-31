@@ -1,11 +1,13 @@
-from django.conf.urls import include, url
+from django.conf.urls import url
 
-from valueFact import views
+from . import views
+
 
 urlpatterns = [
-    #url(r'^$', views.post_valueFact, name='post_valueFact'),
-    #url(r'^valuefact/(?P<pk>[0-9]+)/$', views.valueFact_detail, name='valueFact_detail'),
-   # url(r'^valuefact/new/$', views.valueFact_new, name='valueFact_new'),
-    #url(r'^valuefact/(?P<pk>[0-9]+)/edit/$', views.valueFact_edit, name='valueFact_edit'),
+
+    url(r'^$', views.valueFactListView.as_view(), name='valueFact_list'),
+    url(r'^(?P<year>\d{4})/(?P<post>[-\w]+)/$',
+        views.valuefact_detail,
+        name='valuefact_detail'),
 
 ]

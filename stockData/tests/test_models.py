@@ -12,4 +12,4 @@ class StockDataAndStockModelTest(TestCase):
 	@unittest.skip
 	def test_get_absolute_url(self):
 		Stock_=Stock.objects.create()
-		self.assertEqual(response.get_absolute_url(),'/stocks/SDRL')
+		self.assertEqual(response.get_absolute_url, '/stocks/SDRL')

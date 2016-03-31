@@ -1,6 +1,10 @@
 from django.db import models
 from django.utils import timezone
+from django.core.urlresolvers import reverse
+from django.db.models import permalink
+
 from accounts.models import User
+
 
 '''
 TO DO-
@@ -28,36 +32,25 @@ class ValueFactPost(models.Model):
         ('draft', 'Draft'),
         ('published', 'Published')
     )
-    '''A fact'''
-    title = models.CharField(max_length=300)
-    slug = models.SlugField(max_length=300,unique_for_date='publish')
-    author = models.ForeignKey(User, related_name='valueFact_posts')
+
+    title = models.CharField(max_length=250)
+    slug = models.SlugField(max_length=250, unique_for_date='publish')
+    author = models.ForeignKey(User, related_name='valueFact_posts') #possible bug, check name
     publish = models.DateTimeField(default=timezone.now)
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-
-    #Add Foreign Key for stock when stock model is created
-
-    #Status of post
-
     status = models.CharField(max_length=10,
                               choices=STATUS_CHOICE,
                               default='draft')
-
     category = models.CharField(max_length=25,
                                 choices=value_fact_category,
                                 default='overall_business')
-
-
+    stockSymbol = models.ForeignKey('Symbol', null=True )
     points = models.IntegerField(default=0, db_column='score')
     vote_up_count = models.IntegerField(default=0)
     vote_down_count = models.IntegerField(default=0)
-
     comment_count = models.PositiveIntegerField(default=0)
-
-    #Endorses value Facts
-
     endorsed = models.BooleanField(default=False, db_index=True)
     endorsed_by = models.ForeignKey(User, null=True, blank=True, related_name='endorsed_posts')
     endorsed_at = models.DateTimeField(null=True, blank=True)
@@ -65,9 +58,37 @@ class ValueFactPost(models.Model):
     objects = models.Manager()
     published = ValueFactManager()
 
-
     class Meta:
         ordering = ('publish',)
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('companies:valuefact_detail', kwargs={
+            'year':self.publish.year,
+            'post': self.slug })
+
+
+
+class Symbol(models.Model):
+    exchange_id = models.IntegerField(blank=True, null=True)
+    ticker = models.CharField(max_length=32)
+    instrument = models.CharField(max_length=64)
+    name = models.CharField(max_length=255, blank=True, null=True)
+    sector = models.CharField(max_length=255, blank=True, null=True)
+    currency = models.CharField(max_length=32, blank=True, null=True)
+    created_date = models.DateTimeField()
+    last_updated_date = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'symbol'
+
+    def __str__(self):
+        return '%s' %self.name
+
+    @permalink
+    def get_absolute_url(self):
+        return ('view_stock', None, {'ticker' : self.ticker})
+
