@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model, SESSION_KEY
 from unittest.mock import patch
-User = get_user_model()
+
 
 '''
 class LoginViewTest(TestCase):

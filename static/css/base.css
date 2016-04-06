@@ -6,6 +6,7 @@
 * 02.0 - Header
 * 03.0 - Welcome Site
 * 04.0 - Login/settings/register
+* 04.1 - Social Login
 * 05.0 - Navbar
 * 06.0 -Login/register/settings etc
 * 07.0 -
@@ -22,6 +23,8 @@
 /////////////////////////////////////////////////////////////////////*/
 
 * {outline: none !important;}
+
+
 
 ::selection {
   background-color: #475B6F;
@@ -659,6 +662,27 @@ border-right: 1px solid rgba(0, 0, 0, 0.2);
 ///////////////////////////////////////////////////////////////////////*/
 
 
+/* social-auth */
+.social {
+    float:right;
+}
+.social li {
+    list-style:none;
+    padding:10px 20px;
+    margin:0 0 10px 0;
+}
+.social li a {
+    width:100%;
+    height:100%;
+    display:block;
+    color:#fff;
+}
+.social li.facebook { background:#3b5399; }
+.social li.twitter { background:#00cffa; }
+.social li.google { background:#de1710; }
+
+
+
 .login-section h1{
     font-size:44px;
 }
@@ -682,13 +706,13 @@ border-right: 1px solid rgba(0, 0, 0, 0.2);
 .well-login span{
     display: block;
     text-align: center;
-    font-size: 95px;
-    line-height: 150px;
-    color: #34393d;
-    margin-bottom: 12px;
+    font-size: 12px;
+    margin-top:15px;
+    color: #ff0000;
 
-    color:#000;
 }
+
+
 
 .well-login input:focus{
     border:2px solid #66FF99;

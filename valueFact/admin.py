@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import ValueFactPost, Symbol
+from .models import ValueFactPost, Symbol, Comment
+
 
 class StockAdmin(admin.ModelAdmin):
     list_display = ('ticker', 'instrument', 'name', 'sector')
@@ -17,5 +18,11 @@ class ValueFactAdmin(admin.ModelAdmin):
     date_hierarchy = 'publish'
     ordering = ['status', 'publish']
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'post', 'created', 'active')
+    list_filter = ('active', 'created', 'updated')
+    search_fields = ('name', 'email', 'body')
+
+admin.site.register(Comment,CommentAdmin)
 admin.site.register(ValueFactPost, ValueFactAdmin)
 admin.site.register(Symbol, StockAdmin)

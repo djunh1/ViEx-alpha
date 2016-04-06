@@ -27,7 +27,6 @@ def stock_data_search_display(request):
 			ticker=form.cleaned_data['text']
 			stockQueryDb=mySQLdb_query(ticker)
 
-			print(stockQueryDb.get_statement_data(stockQueryDb.eps))
 			if stockQueryDb.get_statement_data(stockQueryDb.eps)==():
 				return render(request,'home.html',{'form':StockForm()})
 			else:

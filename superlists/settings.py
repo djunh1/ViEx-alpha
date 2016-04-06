@@ -10,6 +10,7 @@ import os
 import json
 
 from django.core.exceptions import ImproperlyConfigured
+from django.core.urlresolvers import reverse_lazy
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -55,20 +56,42 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts',
     'django.contrib.admin',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
+    'social.apps.django_app.default',
     'djangobower',
     'rest_framework',
     'stockData',
-    'accounts',
     'functional_tests',
     'valueFact',
 )
 
-AUTH_USER_MODEL = 'accounts.User'
+#Find out about social app auth module, this one doesnt work.
 
 AUTHENTICATION_BACKENDS = (
+    'social.backends.facebook.Facebook2OAuth2',
+    'social.backends.google.GoogleOAuth2',
+    'social.backends.twitter.TwitterOAuth',
     'django.contrib.auth.backends.ModelBackend',
+    'accounts.authentication.EmailAuthBackend'
 )
+
+SOCIAL_AUTH_FACEBOOK_KEY = '502940859892957'
+SOCIAL_AUTH_FACEBOOK_SECRET = 'fd2135cdd771a1ea4f8aa852d432adac'
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+
+SOCIAL_AUTH_TWITTER_KEY = 'nJOw11Pppi2x6Jr8U8SxnDtGl'
+SOCIAL_AUTH_TWITTER_SECRET = 'NTa0K0iURh5GEX2X9Ofy7OtJN1hYEgAmYPMhjxE0vQ0BwH9XCo'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '670034875011-ndl8i38o956jf1a1muqb456b93bb45a5.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'js0AOlAwrvO15T6ZEGWiwWPl'
+
+
+LOGIN_REDIRECT_URL = reverse_lazy('dashboard')
+LOGIN_URL = reverse_lazy('login')
+LOGOUT_URL = reverse_lazy('logout')
 
 LOGGING = {
    'version': 1,
@@ -122,9 +145,11 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'superlists.wsgi.application'
 
-
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
@@ -145,6 +170,20 @@ DATABASES = {
     }
 }
 
+#Email settings
+
+
+email_host=get_secret("EMAIL_HOST")
+email_host_user=get_secret("EMAIL_HOST_USER")
+email_host_password=get_secret("EMAIL_HOST_PASSWORD")
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = email_host
+EMAIL_HOST_USER = email_host_user
+EMAIL_HOST_PASSWORD = email_host_password
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -164,6 +203,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     )
 }
+
+#Site map
+SITE_ID = 1
 
 #The root directory for all Bower Components
 
@@ -196,3 +238,4 @@ BOWER_INSTALLED_APPS = (
     "font-awesome#4.3.0",
 
 )
+

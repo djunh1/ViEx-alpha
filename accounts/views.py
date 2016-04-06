@@ -1,83 +1,69 @@
-import json
-
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
-from rest_framework import permissions, viewsets, status, views
-from rest_framework.response import Response
+from accounts.forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
+from accounts.models import Profile
 
-from accounts.models import User
-from accounts.permissions import IsUserOwner
-from accounts.serializers import UserSerializer
-
-class UserViewSet(viewsets.ModelViewSet):
-	lookup_field = 'username'
-	queryset = User.objects.all()
-	serializer_class=UserSerializer
-
-	def get_permissions(self):
-		if self.request.method in permissions.SAFE_METHODS:
-			return (permissions.AllowAny(),)
-
-		if self.request.method == 'POST':
-			return (permissions.AllowAny(),)
-
-		return (permissions.IsAuthenticated(), IsUserOwner(),)
-
-	def create(self,request):
-		serializer=self.serializer_class(data=request.data)
-
-		if serializer.is_valid():
-			User.objects.create_user(**serializer.validated_data)
-
-			return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
-
-		return Response({
-			'status' : 'Bad request.',
-			'message' : 'Account could not be created with recieved data.'
-		}, status=status.HTTP_400_BAD_REQUEST)
+def user_login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            user = authenticate(username=cd['username'],
+                                password=cd['password'])
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponse('Authenticated Successfully')
+                else:
+                    return HttpResponse('Disabled Account')
+            else:
+                return HttpResponse('Invalid Login')
+    else:
+        form = LoginForm()
+    return render(request, 'account/login.html', {'form': form})
 
 
-class LoginView(views.APIView):
-	def post(self, request, format=None):
+def register(request):
+    if request.method == 'POST':
+        user_form = UserRegistrationForm(request.POST)
+        if user_form.is_valid():
+            new_user = user_form.save(commit=False)
+            new_user.set_password(user_form.cleaned_data['password'])
+            new_user.save()
+            profile = Profile.objects.create(user=new_user)
+            return render(request, 'account/register_done.html',
+                          {'new_user': new_user})
+    else:
+        user_form = UserRegistrationForm()
+    return render(request, 'account/register.html',
+                  {'user_form': user_form})
 
-		data = json.loads(request.body.decode("utf-8"))
+@login_required
+def edit(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(instance=request.user, data=request.POST)
+        profile_form = ProfileEditForm(instance=request.user.profile,
+                                       data=request.POST,
+                                       files=request.FILES)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your Profile is Updated!')
+        else:
+            messages.error(request, 'There was an error updating your profile.')
+    else:
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileEditForm(instance=request.user.profile)
+    return render(request, 'account/edit.html', {'user_form': user_form,
+                                                'profile_form': profile_form})
 
-		email = data.get('email', None)
-		password = data.get('password', None)
 
-		print(data.get('email', None))
+@login_required
+def dashboard(request):
+    return render(request, 'account/dashboard.html',
+                  {'section': dashboard})
 
-		account = authenticate(email=email, password=password)
-
-		print(account)
-
-		serialized = UserSerializer(account)
-
-		print(serialized.data)
-
-		if account is not None:
-			if account.is_active:
-				login(request, account)
-
-				serialized = UserSerializer(account)
-
-				return Response(serialized.data)
-
-			else:
-				return Response({
-					'status': 'Unauthorized',
-					'message': 'This account has been disabled.'
-				}, status=status.HTTP_401_UNAUTHORIZED)
-		else:
-			return Response({
-				'status': 'Unauthorized',
-				'message': 'Username or Password combination is invalid.'
-			}, status=status.HTTP_401_UNAUTHORIZED)
-
-class LogoutView(views.APIView):
-	permission_classes = (permissions.IsAuthenticated, )
-
-	def post(self, request, format=None):
-		logout(request)
-
-		return Response({}, status=status.HTTP_204_NO_CONTENT)

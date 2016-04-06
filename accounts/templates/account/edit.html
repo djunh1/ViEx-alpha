@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="section login-section">
+    <div class="container">
+        <div class="row">
+
+
+         <div class="col-md-5">
+          <div class="well-login" >
+            <form action="" method="post" enctype="multipart/form-data" class="settings" >
+                      {{ user_form.as_p }}
+                      {{ profile_form.as_p }}
+                      {% csrf_token %}
+
+              <div class="form-group">
+                <button type="submit" class="button button-primary">Submit</button>
+                <button type="button" class="button button-danger pull-right" ">Delete Account</button>
+              </div>
+            </form>
+                          {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li class="{{ message.tags }}">
+                            {{ message|safe }}
+                            <a href="{% url 'edit' %}" class="close">×</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+          </div>
+        </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

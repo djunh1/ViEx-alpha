@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<!-- TO DO
+
+  1- Captcha
+  2- Click to agree to terms and agreement -->
+
+<div class="section login-section">
+  <div class="container">
+    <div class="row">
+      <h1 class="color1 section-title">Create Account</h1>
+      <div class="col-md-6">
+
+
+        <div class="well-login">
+
+          <form role="form" method="post" action="">
+            {{ user_form.as_p }}
+            {% csrf_token %}
+
+            <!--div class="row register-agreement">
+                    <label class="label-body" for="valueExchange-agreement">
+                        <input id="valueExchange-agreement" class="agreement-checkbox" type="checkbox" >
+                        I agree to the Value Investing Exchange
+                        <a id="blank" target="_blank" href="/termsandconditions">terms and conditions</a>
+
+                    </label>
+                </div-->
+
+            <div class="form-group">
+              <button type="submit" class="button button-primary">Submit</button>
+            </div>
+          </form>
+
+
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h3>Access to posting, searches and much more!</h3>
+        <p>A free account allows contributing.  You can still browse our stock database without an account</p>
+
+        <hr>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

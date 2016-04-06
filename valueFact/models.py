@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.core.urlresolvers import reverse
 from django.db.models import permalink
 
-from accounts.models import User
+from django.contrib.auth.models import User
 
 
 '''
@@ -92,3 +92,18 @@ class Symbol(models.Model):
     def get_absolute_url(self):
         return ('view_stock', None, {'ticker' : self.ticker})
 
+
+class Comment(models.Model):
+    post = models.ForeignKey(ValueFactPost, related_name='comments')
+    name = models.CharField(max_length=80)
+    email = models.EmailField()
+    body = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ('created',)
+
+    def __str__(self):
+        return'Contributed by {} on {}'.format(self.name, self.post)
