@@ -6,36 +6,36 @@
     <div class="container">
         <div class="row">
 
-
          <div class="col-md-5">
-          <div class="well-login" >
+          <div class="well-login well-password">
+            <h2>Edit my profile</h2>
+              {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <a href="{% url 'edit' %}" class="close">×</a>
+                        <li class="{{ message.tags }}">
+                            {{ message|safe }}
+
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
             <form action="" method="post" enctype="multipart/form-data" class="settings" >
                       {{ user_form.as_p }}
                       {{ profile_form.as_p }}
                       {% csrf_token %}
 
               <div class="form-group">
-                <button type="submit" class="button button-primary">Submit</button>
-                <button type="button" class="button button-danger pull-right" ">Delete Account</button>
+                <button type="submit" class="button button-primary">Update Profile</button>
               </div>
             </form>
-                          {% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
-                        <li class="{{ message.tags }}">
-                            {{ message|safe }}
-                            <a href="{% url 'edit' %}" class="close">×</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
+
 
           </div>
-        </div>
+          <div>
 
+          </div>
 
-
-        </div>
     </div>
 </div>
 

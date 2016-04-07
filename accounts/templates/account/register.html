@@ -17,8 +17,10 @@
         <div class="well-login">
 
           <form role="form" method="post" action="">
+
             {{ user_form.as_p }}
             {% csrf_token %}
+
 
             <!--div class="row register-agreement">
                     <label class="label-body" for="valueExchange-agreement">

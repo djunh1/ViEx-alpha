@@ -10,7 +10,7 @@
 						<a href="{% url 'companies:valueFact_list' %}"><span class="fa fa-search"> Search </a></li>
                     <li {% if section == "dashboard" %} class="selected" {% endif %}>
 						<a href="{% url 'dashboard' %}"><span class="fa fa-group"></span> {{ request.user.username }}</a></li>
-                    <li><a href="{% url 'edit' %}"><span class="fa fa-cogs"></span> Edit </a></li>
+                    <li><a href="{% url 'edit' %}"><span class="fa fa-cogs"></span> My Profile </a></li>
                     <li><a href="{% url 'django.contrib.auth.views.logout' %}" ><span class="fa fa-sign-out"></span> </a></li>
 
                 {% else %}

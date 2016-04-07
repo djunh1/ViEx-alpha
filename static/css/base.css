@@ -601,6 +601,12 @@ border-right: 1px solid rgba(0, 0, 0, 0.2);
     border-color: rgba(0, 0, 0, 0.2);
 }
 
+.btn-twitter{
+    color: #000;
+    background-color: #00aced;
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
 .btn-facebook:active, .btn-facebook:hover{
     background-color: #2B457B;
     border-color: rgba(0, 0, 0, 0.2);
@@ -608,6 +614,11 @@ border-right: 1px solid rgba(0, 0, 0, 0.2);
 
 .btn-google:active, .btn-google:hover{
     background-color: #A23729;
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-twitter:active, .btn-twitter:hover{
+    background-color: #3399FF;
     border-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -621,6 +632,36 @@ border-right: 1px solid rgba(0, 0, 0, 0.2);
     border-top: 1px solid #8C8B8B;
     text-align: center;
 }
+
+.well-login li{
+    text-align:center;
+    font-size:14px;
+    font-weight:bold;
+    color: #CC0000;
+}
+
+.well-login{
+    margin:0.5rem;
+    padding-bottom:0.5rem;
+}
+
+.well-login ul{
+    margin-bottom:0.5rem;
+}
+
+.well-welcome{
+    min-height: 20px;
+    padding: 72px 19px 30px 19px;
+    margin-bottom: 235px;
+    margin-top:75px;
+    background-color: #D8F9E5;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+
 
 
 
@@ -703,6 +744,15 @@ border-right: 1px solid rgba(0, 0, 0, 0.2);
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
 }
 
+.well-password{
+    margin-bottom: 235px;
+    margin-top:75px;
+    background-color: #F1EFED;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+
+}
+
 .well-login span{
     display: block;
     text-align: center;
@@ -712,6 +762,27 @@ border-right: 1px solid rgba(0, 0, 0, 0.2);
 
 }
 
+#login-title{
+    display: block;
+    text-align: center;
+    font-size: 90px;
+    line-height:100px;
+    margin-top:15px;
+    color: #000;
+}
+
+.well-login input{
+    line-height:30px;
+    border-radius:3px;
+    width:100%;
+    border:1px solid #787878;
+    height:45px;
+
+}
+
+.well-login hr{
+    border-top: 1px solid #000;
+}
 
 
 .well-login input:focus{
@@ -737,6 +808,15 @@ border-right: 1px solid rgba(0, 0, 0, 0.2);
     text-align:left;
 }
 
+.well-feed h2{
+    margin-top:4rem;
+}
+
+.well-feed ul{
+    padding:0px;
+    margin:0 0 5px 0;
+}
+
 .register-agreement{
     padding:10px 0 25px 18px;
 }
@@ -751,6 +831,8 @@ background-color:#0066FF;
 
 
 }
+
+
 
 .personal-info dl{
     background-color: #fff;
@@ -788,6 +870,33 @@ background-color:#0066FF;
     font-size:20px;
     color:#000;
     font-weight:bold;
+}
+
+
+/*////////////////////////////////////////////////////////////////////////
+//  04.2- Messages
+///////////////////////////////////////////////////////////////////////*/
+
+.well-login ul.messages{
+    border:1px solid #606060;
+
+    background:#5CDC5C;
+    height:45px;
+    padding-left:3px;
+}
+
+.well-login li.success{
+    color:#000;
+    line-height:3px;
+    text-align:left;
+
+    margin-left:78px;
+
+}
+
+.well-login a.close{
+    color:#000;
+
 }
 
 
@@ -1164,156 +1273,7 @@ header.is-fixed {
 }
 
 
-/*
-.navbar-logo{
-    width:30%;
-}
 
-nav {
-    height: 40px;
-    width: 100%;
-    background: #0000FF;
-    font-size: 14pt;
-    font-family: 'PT Sans', Arial, sans-serif;
-    font-weight: bold;
-    position: relative;
-
-    border-bottom: 2px solid #0D9AF1;
-}
-nav ul {
-    padding: 0;
-    margin: 0 auto;
-    width: 600px;
-    height: 40px;
-
-}
-
-nav li {
-    display: inline;
-    float: left;
-}
-
-.cd-header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 50px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  background-color: #030d18;
-  z-index: 3;
-}
-
-@media only screen and (min-width: 768px) {
-  .cd-header {
-    background-color: transparent;
-    box-shadow: none;
-  }
-}
-
-nav a {
-    color: #000;
-    display: inline-block;
-    width: 150px;
-    text-align: center;
-    text-decoration: none;
-    line-height: 45px;
-    text-shadow: 1px 1px 0px #283744;
-}
-
-nav li a {
-    border-right: 1px solid #576979;
-    box-sizing:border-box;
-    -moz-box-sizing:border-box;
-    -webkit-box-sizing:border-box;
-}
-nav li:last-child a {
-    border-right: 0;
-}
-
-nav a:hover, nav a:active {
-    color:#0000FF;
-    background-color: rgba(100, 54, 54, 0.5);
-
-}
-
-nav a#pull {
-    display: none;
-}
-
-.navbar-nav>li>a{
-  font-size: 15px;
-  font-weight: bold;
-}
-.navbar-nav>li>a:hover{
-  color: #CC3366;
-  border-bottom: 1px solid #CC3366;
-  transition: all .6s;
-}
-
-@media screen and (max-width: 600px) {
-    nav {
-        height: auto;
-    }
-    nav ul {
-        width: 100%;
-        display: block;
-        height: auto;
-    }
-    nav li {
-        width: 50%;
-        float: left;
-        position: relative;
-    }
-    nav li a {
-        border-bottom: 1px solid #576979;
-        border-right: 1px solid #576979;
-    }
-    nav a {
-        text-align: left;
-        width: 100%;
-        text-indent: 25px;
-    }
-}
-
-@media only screen and (max-width : 480px) {
-    nav {
-        border-bottom: 0;
-    }
-    nav ul {
-        display: none;
-        height: auto;
-    }
-    nav a#pull {
-        display: block;
-        background-color: #283744;
-        width: 100%;
-        position: relative;
-    }
-    nav a#pull:after {
-        content:"";
-        background: url('nav-icon.png') no-repeat;
-        width: 30px;
-        height: 30px;
-        display: inline-block;
-        position: absolute;
-        right: 15px;
-        top: 10px;
-    }
-}
-
-@media only screen and (max-width : 320px) {
-    nav li {
-        display: block;
-        float: none;
-        width: 100%;
-    }
-    nav li a {
-        border-bottom: 1px solid #576979;
-    }
-}
-
-*/
 
 /*////////////////////////////////////////////////////////////////////////
 //  06 - Stock search Page
