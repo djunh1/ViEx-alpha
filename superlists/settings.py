@@ -63,7 +63,6 @@ INSTALLED_APPS = (
     'social.apps.django_app.default',
     'djangobower',
     'rest_framework',
-    'stockData',
     'functional_tests',
     'valueFact',
 )

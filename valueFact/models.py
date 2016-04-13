@@ -1,9 +1,12 @@
+from __future__ import unicode_literals
+
 from django.db import models
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 from django.db.models import permalink
-
 from django.contrib.auth.models import User
+
+
 
 
 '''
@@ -14,9 +17,15 @@ TO DO-
 
 '''
 
+# Provides form to search for a stock.
+class Stock(models.Model):
+    text = models.TextField(default='')
+
+
 class ValueFactManager(models.Manager):
     def get_queryset(self):
         return super(ValueFactManager, self).get_queryset().filter(status='published')
+
 
 class ValueFactPost(models.Model):
     value_fact_category = (
@@ -88,9 +97,8 @@ class Symbol(models.Model):
     def __str__(self):
         return '%s' %self.name
 
-    @permalink
     def get_absolute_url(self):
-        return ('view_stock', None, {'ticker' : self.ticker})
+        return reverse('companies:view_stock', kwargs={'symbol': self.ticker})
 
 
 class Comment(models.Model):

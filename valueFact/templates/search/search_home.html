@@ -1,0 +1,28 @@
+{% extends 'base_search.html' %}
+
+{% block content %}
+
+<div class="section login-section">
+      <div class="container">
+       <div class="row">
+           <div class="well-search">
+             <h1 class="color1 section-title">Search the Value Investing Exchange</h1>
+
+            <div class="row">
+			<div class="col-md-6 col-md-offset-4">
+
+				  <form action="{% url 'companies:view_stock' symbol %}" method="POST" class="stockSearch">
+                          <input type="hidden" name="next" value="{{ next }}"/>
+                          <span><input type="submit" class="main-search-button" value="Submit"></span>
+                            {{ form }}
+                            {% csrf_token %}
+                      </form>
+
+		    </div>
+		</div>
+            </div>
+           </div>
+          </div>
+        </div>
+
+{% endblock %}

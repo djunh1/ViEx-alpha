@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 
 from valueFact.sitemaps import PostSitemap
+from valueFact import views as stockviews
 
 
 admin.autodiscover()
@@ -21,11 +22,12 @@ urlpatterns = [
     url('social-auth/', include('social.apps.django_app.urls', namespace='social')),
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},
         name='django.contrib.sitemaps.views.sitemap'),
+    url(r'^$', stockviews.home_page, name='home_page'),
 
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 '''

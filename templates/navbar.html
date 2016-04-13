@@ -1,13 +1,13 @@
 
 <div>
 	<header>
-		<a id="cd-logo" class ="logo-link" href="/browse">Value Investing Exchange</a>
+		<a id="cd-logo" class ="logo-link" href="{% url 'home_page' %}">Value Investing Exchange</a>
 		<nav id="cd-top-nav">
 
 			<ul>
                 {% if request.user.is_authenticated %}
-                    <li {% if section == "companies:valueFact_list" %} class="selected" {% endif %}>
-						<a href="{% url 'companies:valueFact_list' %}"><span class="fa fa-search"> Search </a></li>
+                    <li {% if section == "companies:search_home" %} class="selected" {% endif %}>
+						<a href="{% url 'companies:search_home' %}"><span class="fa fa-search"> Search </a></li>
                     <li {% if section == "dashboard" %} class="selected" {% endif %}>
 						<a href="{% url 'dashboard' %}"><span class="fa fa-group"></span> {{ request.user.username }}</a></li>
                     <li><a href="{% url 'edit' %}"><span class="fa fa-cogs"></span> My Profile </a></li>

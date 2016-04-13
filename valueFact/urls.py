@@ -7,8 +7,12 @@ from valueFact.feeds import LatestPostsFeed
 urlpatterns = [
 
     url(r'^$',
-        views.valueFactListView.as_view(),
-        name='valueFact_list'),
+        views.search_home,
+        name='search_home'),
+
+    url(r'^(?P<symbol>[A-Za-z.-]{0,5})/$',
+        views.view_stock,
+        name='view_stock'),
 
     url(r'^(?P<year>\d{4})/(?P<post>[-\w]+)/$',
         views.valuefact_detail,

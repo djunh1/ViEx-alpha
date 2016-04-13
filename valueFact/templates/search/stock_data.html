@@ -1,0 +1,85 @@
+{% extends "base_search.html" %}
+
+{% block content %}
+
+            <div id="searchbar">
+                <div id="searchbarInner">
+                        <form action="{% url 'companies:view_stock' symbol%}" method="POST" class="stockSearch">
+                          <input type="hidden" name="next" value="{{ next }}"/>
+                          <span><input type="submit" class="search-button" value="Submit"></span>
+                            {{ form }}
+                            {% csrf_token %}
+                      </form>
+                </div>
+            </div>
+
+    <div class="container content_main_container">
+
+        <div class="row">
+			<div class="col-lg-12">
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <a href="{% url 'companies:search_home' %}" class="close">×</a>
+                        <li class="{{ message.tags }}">
+                            {{ message|safe }}
+
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+				<div class="well-stock-search">
+				<div class="row">
+					<div class="col-md-6">
+						<h3>{{ stock.ticker }} </h3>
+						<h5>{{ stock.name}} </h5>
+					</div>
+					<div class="col-md-6">
+
+
+					<img src="http://chart.finance.yahoo.com/t?s=SDRL&amp;lang=en-US&amp;region=US&amp;width=300&amp;height=180"
+						 alt="SeaDrill Limited (SDRL)" width="350" height="250" class="stock-img">
+					</div>
+				</div>
+                </div>
+			</div>
+		</div>
+
+
+
+
+       <div class="row">
+         <div class="col-md-6 col-md-offset-1 left_content">
+             <br><br>
+             <hr>
+             <table id="id_stock_table" class="table">
+        {% for item in eps %}
+            <tr>
+            	<td>{{ item.0 |date}}</td><td>{{ item.1 |floatformat:2 }}</td>
+            </tr>
+       {% empty %}
+       	<span class='help-block'>No EPS data available</span>
+       {% endfor %}
+
+       {% for item in fcf %}
+            <tr>
+            	<td>FCF {{ item |floatformat:2 }}</td>
+            </tr>
+       {% empty %}
+       	<span class='help-block'>No FCF data available</span>
+       {% endfor %}
+       <tr>
+        <td>NCAV {{ncav |floatformat:2}}</td>
+       </tr>
+       <tr>
+        <td>NNWC {{netnet |floatformat:2}}</td>
+       </tr>
+    </table>
+
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock  %}

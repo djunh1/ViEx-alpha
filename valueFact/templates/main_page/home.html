@@ -1,0 +1,104 @@
+{% extends "base_Search.html" %}
+
+{% block content %}
+            <div id="searchbar">
+                <div id="searchbarInner">
+                        <form action="{% url 'companies:view_stock' symbol %}" method="POST" class="stockSearch">
+                          <input type="hidden" name="next" value="{{ next }}"/>
+                          <span><input type="submit" class="search-button" value="Submit"></span>
+                            {{ form }}
+                            {% csrf_token %}
+                      </form>
+                </div>
+            </div>
+
+<div class="container content_main_container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-1 left_content">
+            <div class="left_wrapper box_1">
+                <div class="section_title">
+                    <h3>Stock Discussions</h3>
+                </div>
+            <div class="left_wrapper_unit">
+                <ul>
+                    <li>one</li>
+                    <li>two</li>
+                    <li>etc..</li>
+                </ul>
+
+            </div>
+            </div>
+
+
+             <div class="left_wrapper box_2">
+                 <div class="left_wrapper_unit no_background">
+                    <div class="section_title">
+                        <h3>Stock Discussions</h3>
+                    </div>
+                     <div class="left_wrapper_unit no_background">
+                    <div class="stock_table">
+                        <div id="stock_list_table">
+                           <table class="table table-condensed table-hover">
+                               <thead>
+                               <tr>
+                                   <th>Symbol</th>
+                                   <th>EPS</th>
+                                   <th>Discussed</th>
+                               </tr>
+                               </thead>
+                               <tbody>
+                               <tr>
+                                   <th>Unassisted</th>
+                                   <th>Unassisted</th>
+                                   <th>Unassisted</th>
+                               </tr>
+                               <tr>
+                                   <th>a</th>
+                                   <th>s</th>
+                                   <th>d</th>
+                               </tr>
+                               </tbody>
+
+                           </table>
+                        </div>
+
+                    </div>
+            </div>
+                 </div>
+
+
+
+
+
+
+            </div>
+
+        </div>
+        <div class="col-md-4 right_content">
+            <div class="right_wrapper box_1">
+                <div class="section_title">
+                    <h3>Follow the market</h3>
+                </div>
+                <div class="spy-graph">
+                    <img src="http://chart.finance.yahoo.com/t?s=SPY&amp;lang=en-US&amp;region=US&amp;width=300&amp;height=180"
+                         alt="SPDR S&amp;P 500 ETF (SPY)" height="180" width="300">
+                </div>
+            </div>
+
+            <div class="right_wrapper box_2">
+                <h3>Other stuff</h3>
+                <ul>
+                    <li>one</li>
+                    <li>two</li>
+                    <li>three</li>
+                </ul>
+
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock%}
