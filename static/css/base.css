@@ -1280,7 +1280,7 @@ header.is-fixed {
 ///////////////////////////////////////////////////////////////////////*/
 
 .stock-img{
-    float:right;
+    float:center;
 
 }
 
@@ -1571,6 +1571,154 @@ font-size: 35px;
     border-radius:0px 5px 5px 0px;
 
 }
+
+.col-stock{
+    padding-right:0px;
+    padding-left:0px;
+}
+
+/*  Search results section */
+
+.stock-profile{
+    width:300px;
+    float:left;
+}
+
+.well-stock-results h2{
+    font-size:20px;
+    line-height:0px;
+    font-weight:100;
+}
+
+.well-stock-results .stock-price{
+    font-size:30px;
+    line-height:25px;
+    color:#000;
+    font-weight:bold;
+}
+
+.well-stock-results span{
+    font-size:14px;
+}
+
+.stock-results-date{
+    font-size:12px;
+    color:#003399;
+    font-weight:normal;
+}
+
+.stock-search-ratio{
+    line-height:21px;
+}
+
+.stock-search-ratio span.ratio-desc{
+    font-size:12px;
+    color:#003399;
+}
+
+.stock-search-ratio span.ratio-number{
+    font-size:14px;
+    font-weight:bold;
+    color:#003300;
+    padding-left:5px;
+}
+
+.well-stock-results h5{
+    font-size:18px;
+    font-weight:100;
+    line-height:0px;
+    padding-top:15px;
+}
+
+.well-stock-results h6{
+    font-size:16px;
+    font-weight:100;
+    line-height:0px;
+    padding-top:15px;
+    margin-left:3px;
+}
+
+.well-stock-results{
+    padding:20px;
+    background:#F8F8F8;
+    border:1px solid #787878;
+    border-radius:3px;
+    margin:30px;
+}
+
+
+
+/* The Table */
+
+caption {
+  text-align: left;
+  color: silver;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 5px;
+}
+
+thead {
+  background: #F8F8F8;
+  color: white;
+}
+
+th,
+td {
+  padding: 2px 11px;
+  font-size:12px;
+  color:#000;
+  font-weight:bold;
+  height:23px;
+  margin:0px;
+
+}
+
+.fcf-item{
+    text-align:center;
+
+}
+
+
+tbody tr:nth-child(even) {
+  background: #F8F8F8;
+  text-align:center;
+}
+
+tbody tr td:nth-child(2) {
+  text-align:left;
+}
+
+tbody tr td:nth-child(3),
+tbody tr td:nth-child(4) {
+  text-align: right;
+  font-family: monospace;
+}
+
+
+td.stock-table-value{
+    text-align:left;
+    font-size:12px;
+    line-height:6px;
+}
+
+td.stock-table-label {
+    text-align:right;
+    font-weight:normal;
+    font-size:12px;
+}
+
+.col-results h4{
+    text-align:center;
+    font-weight:100;
+    font-size:20px;
+}
+.col-results hr{
+        border-top: 1px solid #000;
+}
+
+
+
 
 /*////////////////////////////////////////////////////////////////////////
 //  07 - Main Page
