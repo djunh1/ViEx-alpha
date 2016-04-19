@@ -879,7 +879,6 @@ background-color:#0066FF;
 
 .well-login ul.messages{
     border:1px solid #606060;
-
     background:#5CDC5C;
     height:45px;
     padding-left:3px;
@@ -889,7 +888,6 @@ background-color:#0066FF;
     color:#000;
     line-height:3px;
     text-align:left;
-
     margin-left:78px;
 
 }
@@ -897,6 +895,42 @@ background-color:#0066FF;
 .well-login a.close{
     color:#000;
 
+}
+
+ul.messages{
+    margin-right:0px;
+    padding-left:0px;
+}
+
+.messages ul.message{
+    border:1px solid #606060;
+    background:#F36B6B;
+    height:45px;
+    padding-left:3px;
+}
+
+.messages li.error{
+    color:#fff;
+    background:#F36B6B;
+    line-height:50px;
+    text-align:center;
+    margin-left:0px;
+    border-radius:3px;
+    padding-left:15px;
+}
+
+.messages a.close{
+    color:#FFFF00;
+    font-size:27px;
+    text-align:left;
+}
+
+.messages .close{
+    padding:7px;
+    margin:1px;
+    color:#FFFF00;
+    font-size:20px;
+    text-align:left;
 }
 
 
@@ -1780,6 +1814,11 @@ td.stock-table-label {
     padding: 0;
     width: 750px;
     text-align: left;
+}
+
+#searchbarInner ul.errorlist{
+    display:none;
+    width:0px;
 }
 
 /* main conent */

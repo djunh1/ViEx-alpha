@@ -22,6 +22,14 @@ def stat_cleaner(ticker):
 	return tickerNew
 
 
+def yahoo_cleaner(ticker):
+	tickerTest = re.search(r'\.', ticker)
+	if tickerTest is not None:
+		tickerNew = re.sub("[\.]", "-", ticker)
+		return tickerNew
+	return ticker
+
+
 class mySQLdb_query(object):
 	'''
 	This logic will control all the Database querries needed for the view.
@@ -94,8 +102,16 @@ class mySQLdb_query(object):
 	def get_EV(self, mktCap):
 		debt = self.get_statement_data(self.LTdebt)
 		cash = self.get_statement_data(self.cashAndEquiv)
-		cd =  debt[0][1] - cash[0][1]
-		EV = mktCap+float(cd)
+		if debt[0][1] == None:
+			cd = -1*cash[0][1]
+		elif cash[0][1] == None:
+			cd = debt[0][1]
+		else:
+			cd = debt[0][1] - cash[0][1]
+		try:
+			EV = mktCap + float(cd)
+		except TypeError:
+			EV = float(cd)
 		return EV
 
 	def get_NCAV(self):
@@ -105,8 +121,10 @@ class mySQLdb_query(object):
 
 		ncav = []
 		for x,y,z in zip(curAssetData,totsLiabData,shoutstData):
-			ncav.append((x[1]-y[1])*(1/z[1]))
-
+			try:
+				ncav.append((x[1]-y[1])*(1/z[1]))
+			except TypeError:
+				ncav.append([])
 		return ncav
 
 
@@ -131,13 +149,6 @@ class mySQLdb_query(object):
 		return stockData
 
 	def get_free_cash_flow(self):
-		'''
-		TO DO
-
-		Formula= FCF/share (have this) / (price per share)
-
-		1- GET price per share
-		'''
 		cfoData=self.get_statement_data(self.CF_operations)
 		cfcapexData=self.get_statement_data(self.CF_CapEx)
 		soData=self.get_statement_data(self.shareOutstanding)

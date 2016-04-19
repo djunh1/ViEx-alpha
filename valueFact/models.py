@@ -27,6 +27,7 @@ class ValueFactManager(models.Manager):
         return super(ValueFactManager, self).get_queryset().filter(status='published')
 
 
+
 class ValueFactPost(models.Model):
     value_fact_category = (
         ('overall_business', 'Overall_Business'),

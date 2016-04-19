@@ -10,14 +10,14 @@ from yahoo_finance import Share
 
 from valueFact.forms import EmailPostForm, CommentForm, StockForm
 from valueFact.models import ValueFactPost, Symbol, Comment
-from valueFact.controller import mySQLdb_query, stat_cleaner
+from valueFact.controller import mySQLdb_query, stat_cleaner, yahoo_cleaner
 
 
 
 def home_page(request):
     form = StockForm()
     if request.method == 'GET':
-        form = StockForm(request.GET)
+        form = StockForm(data=request.GET)
         if form.is_valid():
             ticker = form.cleaned_data['text']
             return HttpResponseRedirect('companies:view_stock' % ticker)
@@ -31,23 +31,25 @@ def search_home(request):
 
 #helper function
 def get_data(request, form, ticker):
-
     try:
         stocksymbol = Symbol.objects.filter(ticker=ticker)[0]
-        print(stocksymbol)
     except IndexError:
         messages.error(request, 'We could not find %s in our database!  Please try again' % ticker)
-        render(request, 'search/stock_data.html', {"form": form})
+        return render(request, 'search/search_start.html', {"form": form})
     else:
-        stockShare = Share(ticker)
-
-
+        stockShare = Share(yahoo_cleaner(ticker))
         #Data from Yahoo Finance API
         stockPrice = stockShare.get_price()
         stockPriceChange = stockShare.get_change()
-        spcPercent = 100.0*float(stockPriceChange)/float(stockPrice)
+        try:
+            spcPercent = 100.0*float(stockPriceChange)/float(stockPrice)
+        except ZeroDivisionError:
+            spcPercent = 0
         EBITDA = stockShare.get_ebitda()
-        PE = float(stockPrice)/float(stockShare.get_earnings_share())
+        try:
+            PE = float(stockPrice)/float(stockShare.get_earnings_share())
+        except ZeroDivisionError:
+            PE = 0
         exchange = stockShare.get_stock_exchange()
         mktcap = stockShare.get_market_cap()
         dividend = stockShare.get_dividend_share()
@@ -68,13 +70,20 @@ def get_data(request, form, ticker):
 
 
         #Combined DB and Yahoo API
-        stockMktCap = stat_cleaner(stockShare.get_market_cap())
+        try:
+            stockMktCap = stat_cleaner(stockShare.get_market_cap())
+        except TypeError:
+            stockMktCap = 0.0
         netnetData =stockQueryDb.get_netnet_value()[1]
-        fcfYield = 100*float(fcfData[0])/float(stockPrice)
+        try:
+            fcfYield = 100*float(fcfData[0])/float(stockPrice)
+        except ZeroDivisionError:
+            fcfYield = 0
+
         EV = stockQueryDb.get_EV(stockMktCap)
-        evEBITDA = EV/stat_cleaner(EBITDA)
-        evREV = EV/float(revenue)
-        evEBIT = EV/float(EBIT)
+        evEBITDA = EV / stat_cleaner(EBITDA)
+        evREV = EV / float(revenue)
+        evEBIT = EV / float(EBIT)
 
         return render(request, 'search/stock_data.html', {'price': stockPrice,'change': stockPriceChange,
                                                           'changepercent': spcPercent, 'fcfYield': fcfYield,
@@ -96,9 +105,10 @@ def view_stock(request, symbol):
             ticker = form.cleaned_data['text']
             return get_data(request, form, ticker)
     else:
-        ticker = symbol
+        ticker = str(symbol)
+
         return get_data(request, form, ticker)
-    return render(request, 'search/stock_data.html', {"form": form})
+    return render(request, 'main_page/home.html', {"form": form})
 
 
 

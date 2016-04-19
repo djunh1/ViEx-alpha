@@ -3,7 +3,12 @@ from django import forms
 from valueFact.models import Comment, Stock
 
 
-EMPTY_ITEM_ERROR="Please search for a valid stock symbol..."
+DEFAULT_ERRORS= {
+	'required': 'This field is required',
+	'invalid': 'Please enter a valid value'
+}
+
+EMPTY_ITEM_ERROR = "Please search for a valid stock symbol..."
 
 class EmailPostForm(forms.Form):
 	name = forms.CharField(max_length=25)
@@ -19,17 +24,17 @@ class CommentForm(forms.ModelForm):
 class StockForm(forms.models.ModelForm):
 
 	class Meta:
-		model=Stock
-		fields=('text',)
-		widgets= {
+		model = Stock
+		fields = ('text',)
+		widgets = {
 		'text': forms.fields.TextInput(attrs={
 			'placeholder': 'Search for a stock...',
 			'class': 'form-control input-lg'
-			}),
-		}
-		error_messages={'text': { 'required': EMPTY_ITEM_ERROR }
+		}),
 		}
 
+		error_messages = {'text': {'required': EMPTY_ITEM_ERROR}}
+
 	def save(self, for_stock):
-		self.instance.stock=for_stock
+		self.instance.stock = for_stock
 		return super().save()
