@@ -11,7 +11,7 @@
             <div class="row">
 			<div class="col-md-6 col-md-offset-4">
 
-				  <form action="{% url 'companies:view_stock' symbol %}" method="GET" class="stockSearch">
+				  <form action="{% url 'companies:view_stock' symbol %}" method="POST" class="stockSearch">
                           <input type="hidden" name="next" value="{{ next }}"/>
                           <span><input type="submit" class="main-search-button" value="Submit"></span>
                             {{ form }}
