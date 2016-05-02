@@ -56,7 +56,8 @@ class ValueFactPost(models.Model):
     category = models.CharField(max_length=25,
                                 choices=value_fact_category,
                                 default='overall_business')
-    stockSymbol = models.ForeignKey('Symbol', null=True )
+    stock = models.ForeignKey('Symbol', null=True, related_name='stock_ticker')
+    stockTicker = models.CharField(max_length=6, default='none')
     points = models.IntegerField(default=0, db_column='score')
     vote_up_count = models.IntegerField(default=0)
     vote_down_count = models.IntegerField(default=0)
@@ -76,8 +77,9 @@ class ValueFactPost(models.Model):
 
     def get_absolute_url(self):
         return reverse('companies:valuefact_detail', kwargs={
-            'year':self.publish.year,
-            'post': self.slug })
+            'stockticker': self.stockTicker,
+            'year': self.publish.year,
+            'post': self.slug})
 
 
 
@@ -90,6 +92,8 @@ class Symbol(models.Model):
     currency = models.CharField(max_length=32, blank=True, null=True)
     created_date = models.DateTimeField()
     last_updated_date = models.DateTimeField()
+
+    objects = models.Manager()
 
     class Meta:
         managed = False

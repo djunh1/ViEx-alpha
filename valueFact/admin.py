@@ -10,7 +10,7 @@ class StockAdmin(admin.ModelAdmin):
     ordering = ['ticker', 'name']
 
 class ValueFactAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'slug', 'author', 'publish', 'status')
+    list_display = ('stock','stockTicker',  'title', 'category', 'slug', 'author', 'publish', 'status')
     list_filter = ('status', 'created', 'publish', 'author')
     search_fields = ('title', 'body')
     prepopulated_fields = {'slug': ('title',)}
@@ -23,6 +23,6 @@ class CommentAdmin(admin.ModelAdmin):
     list_filter = ('active', 'created', 'updated')
     search_fields = ('name', 'email', 'body')
 
-admin.site.register(Comment,CommentAdmin)
+admin.site.register(Comment, CommentAdmin)
 admin.site.register(ValueFactPost, ValueFactAdmin)
 admin.site.register(Symbol, StockAdmin)

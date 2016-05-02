@@ -33,6 +33,6 @@ if settings.DEBUG:
 '''
 TO DO-
 
-1- SITEMAPS, change the domain name for production from example.com to valueinvestingexchange.com, or whatever it is
+1- SITEMAPS, change the domain name for production from example.com to valueinvestingexchange.com
 
 '''

@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+
+
+
+{% block content %}
+    <h1>My courses</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="well-postlist">
+                {% for post in object_list %}
+            <div class="course-info">
+                <h3>{{ post.title }}</h3>
+                <p>
+                    <a href="{% url "companies:post_edit" post.id %}">Edit</a>
+                    <a href="{% url "companies:post_delete" post.id %}">Delete</a>
+
+                </p>
+            </div>
+        {% empty %}
+            <p>You have not made any posts yet.</p>
+        {% endfor %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

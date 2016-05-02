@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+
+
+
+{% block content %}
+
+
+    <div class="container">
+        <div class="row">
+            <div class="well-search">
+                <h1>Delete this post "{{ object.title }}"</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            <p>Confirm you wish to delete the following:  "{{ object }}"</p>
+            <input type="submit" class="button button-primary" value="DELETE POST">
+        </form>
+            </div>
+       </div>
+    </div>
+{% endblock %}

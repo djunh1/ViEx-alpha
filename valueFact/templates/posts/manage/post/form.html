@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+
+{% block title %}
+    {% if object %}
+        Edit post "{{ object.title }}"
+    {% else %}
+        Create Post
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="well-search">
+                <h1>
+                {% if object %}
+                    Edit Post "{{ object.title }}"
+                {% else %}
+                    Create a new post
+                {% endif %}
+                </h1>
+                <div class="module">
+                    <h2>Post a fact about this company</h2>
+
+                    <form action="" method="post">
+                        {{ form.as_p }}
+                        {% csrf_token %}
+                        <p><input type="submit" value="Save post"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

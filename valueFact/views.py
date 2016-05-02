@@ -4,9 +4,13 @@ from django.http import HttpResponseRedirect
 from django.views.generic import ListView
 from django.core.mail import send_mail
 from django.contrib import messages
+from django.core.urlresolvers import reverse_lazy, reverse
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.utils import timezone
 import datetime
 import smtplib
 from yahoo_finance import Share
+from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 
 from valueFact.forms import EmailPostForm, CommentForm, StockForm
 from valueFact.models import ValueFactPost, Symbol, Comment
@@ -26,7 +30,11 @@ def home_page(request):
 
 def search_home(request):
     form = StockForm()
-    return render(request, 'search/search_home.html', {'form': form})
+    return render(request, 'search/search_home.html', {"form": form})
+
+def get_posts(request, ticker):
+    posts = ValueFactPost.objects.all()
+    return render(request, 'search/stock_data.html', {"posts": posts})
 
 
 #helper function
@@ -85,15 +93,22 @@ def get_data(request, form, ticker):
         evREV = EV / float(revenue)
         evEBIT = EV / float(EBIT)
 
+
+        #Gets posts.   this function is getting too large
+        qs = ValueFactPost.objects.all()
+        posts = qs.filter(stock=stocksymbol)
+
+
         return render(request, 'search/stock_data.html', {'price': stockPrice,'change': stockPriceChange,
                                                           'changepercent': spcPercent, 'fcfYield': fcfYield,
                                                           'EV': EV, 'evEBITDA': evEBITDA,'evREV': evREV,
-                                                          'evEBIT': evEBIT,'PE': PE, 'exchange': exchange,
+                                                          'evEBIT': evEBIT, 'PE': PE, 'exchange': exchange,
                                                           'mktcap': mktcap, 'dividend': dividend, 'dividendYield':dividendYield,
-                                                          'plow': plow, 'phigh':phigh, 'epsRecent':epsRecent,
+                                                          'plow': plow, 'phigh': phigh, 'epsRecent': epsRecent,
                                                           'eps': epsData, 'fcf': fcfData,
-                                                         'ncav': ncavData, 'netnet':netnetData,
-                                                         "form": form, 'stock': stocksymbol})
+                                                         'ncav': ncavData, 'netnet': netnetData,
+                                                         "form": form, 'stock': stocksymbol,
+                                                          "posts": posts})
 
 
 def view_stock(request, symbol):
@@ -106,15 +121,73 @@ def view_stock(request, symbol):
             return get_data(request, form, ticker)
     else:
         ticker = str(symbol)
-
         return get_data(request, form, ticker)
     return render(request, 'main_page/home.html', {"form": form})
 
 
+class valueFactListView(ListView):
+    model = ValueFactPost
+    template_name = 'posts/manage/post/list.html'
+
+    def get_queryset(self):
+        qs = super(valueFactListView, self).get_queryset()
+        return qs.filter(author=self.request.user)
 
 
-def valuefact_detail(request, year, post):
-    post = get_object_or_404(ValueFactPost, slug=post, status='published', publish__year=year)
+class OwnerMixin(object):
+    def get_queryset(self):
+        qs = super(OwnerMixin, self).get_queryset()
+        return qs.filter(author=self.request.user)
+
+
+class OwnerEditMixin(object):
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super(OwnerEditMixin, self).form_valid(form)
+
+
+class OwnerPostMixin(OwnerMixin, LoginRequiredMixin):
+    model = ValueFactPost
+
+
+class OwnerPostEditMixin(OwnerPostMixin, OwnerEditMixin):
+    fields = ['category', 'title', 'body']
+
+    def form_valid(self, form):
+
+        form.instance.status = 'published'
+        form.instance.slug = form.instance.title.replace(" ", "_")
+        print(form.instance.slug)
+        ticker = self.kwargs['symbol']
+        symbolObject = Symbol.objects.filter(ticker=ticker)[0]
+        form.instance.stock = symbolObject
+        form.instance.stockTicker = symbolObject.ticker
+        return super(OwnerPostEditMixin, self).form_valid(form)
+
+    success_url = reverse_lazy('companies:manage_post_list')
+    template_name = 'posts/manage/post/form.html'
+
+
+class ManagePostListView(OwnerPostMixin, ListView):
+    template_name = 'posts/manage/post/list.html'
+
+
+class PostCreateView(PermissionRequiredMixin, OwnerPostEditMixin, CreateView):
+    permission_required = 'posts.add_post'
+
+
+class PostUpdateView(PermissionRequiredMixin, OwnerPostEditMixin, UpdateView):
+    permission_required = 'posts.change_post'
+
+
+class PostDeleteView(PermissionRequiredMixin, OwnerPostMixin, DeleteView):
+    template_name = 'posts/manage/post/delete.html'
+    success_url = reverse_lazy('companies:manage_post_list')
+    permission_required = 'posts.delete_post'
+
+
+def valuefact_detail(request, stockticker, year, post):
+    post = get_object_or_404(ValueFactPost, stockTicker=stockticker, slug=post, status='published', publish__year=year)
 
     #Fetches comments (Uses related name to get them)
     comments = post.comments.filter(active=True)
@@ -135,11 +208,8 @@ def valuefact_detail(request, year, post):
 def valuefact_share(request, fact_id):
     valueFact = get_object_or_404(ValueFactPost, id=fact_id, status='published')
     sent = False
-
     if request.method == 'POST':
         form = EmailPostForm(request.POST)
-
-
         if form.is_valid():
             cd = form.cleaned_data
             post_url = request.build_absolute_uri(valueFact.get_absolute_url())
@@ -152,7 +222,6 @@ def valuefact_share(request, fact_id):
                                                                      cd['comments'])
             send_mail(subject, message, 'valueinvestingexchange@gmail.com', [cd['to']])
             sent = True
-
     else:
         form = EmailPostForm()
     return render(request, 'companies/valueFact/share.html', {'post': valueFact,

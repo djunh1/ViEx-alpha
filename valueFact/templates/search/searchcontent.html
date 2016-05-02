@@ -1,0 +1,28 @@
+
+
+
+<div class="container content_main_container">
+    <div class="row">
+        <h1>Discussion</h1>
+        {% for post in posts %}
+		<h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+        <p class="date">
+            Published {{post.publish}} by {{post.author}}
+        </p>
+        {{post.body|truncatewords:30|linebreaks}}
+        {% empty %}
+            <p>{{ stock.name}} has no facts yet.  Please post one!</p>
+        {% endfor %}
+         <p>
+                <a href="{% url "companies:post_create" stock.ticker %}" class="button button-create"> <!-- Use stock.ticker ? -->
+                    Contribute New Post
+                </a>
+            </p>
+    </div>
+
+</div>
+
+
+
+
+
