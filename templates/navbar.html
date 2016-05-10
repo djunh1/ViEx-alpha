@@ -9,13 +9,13 @@
                     <li {% if section == "companies:search_home" %} class="selected" {% endif %}>
 						<a href="{% url 'companies:search_home' %}"><span class="fa fa-search"> Search </a></li>
                     <li {% if section == "dashboard" %} class="selected" {% endif %}>
-						<a href="{% url 'dashboard' %}"><span class="fa fa-group"></span> {{ request.user.username }}</a></li>
-                    <li><a href="{% url 'edit' %}"><span class="fa fa-cogs"></span> My Profile </a></li>
-                    <li><a href="{% url 'django.contrib.auth.views.logout' %}" ><span class="fa fa-sign-out"></span> </a></li>
+						<a href="{% url 'accounts:dashboard' %}"><span class="fa fa-group"></span> {{ request.user.username }}</a></li>
+                    <li><a href="{% url 'accounts:edit' %}"><span class="fa fa-cogs"></span> My Profile </a></li>
+                    <li><a href="{% url 'accounts:logout' %}" ><span class="fa fa-sign-out"></span> </a></li>
 
                 {% else %}
-                    <li><a href="{% url 'django.contrib.auth.views.login' %}">Login</a></li>
-                    <li><a href="/account/register">Register</a></li>
+                    <li><a href="{% url 'accounts:login' %}">Login</a></li>
+                    <li><a href="{% url 'accounts:register' %}">Register</a></li>
 				<!-- Remove hardcode URL -->
                 {% endif %}
 			</ul>
@@ -47,7 +47,7 @@
 			<li><a href="">Browse Stocks</a></li>
 			<li><a href="/account/login">Login</a></li>
 			<li><a href="/account/register">Register</a></li>
-			<li><a href="{% url 'password_change' %}"><span class="fa fa-cogs"></span> Change Password </a></li>
+			<li><a href="{% url 'accounts:password_change' %}"><span class="fa fa-cogs"></span> Change Password </a></li>
 		</ul> <!-- cd-single-item-wrapper -->
 
 		<ul class="cd-navigation cd-single-item-wrapper" >

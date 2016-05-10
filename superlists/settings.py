@@ -152,11 +152,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DB_NAME=get_secret("DATABASE_NAME")
-DB_USER=get_secret("DATABASE_USERNAME")
-DB_PASSWORD=get_secret("DATABASE_PASSWORD")
-DB_HOST=get_secret("DATABASE_HOST")
-DB_PORT=get_secret("PORT")
+DB_NAME = get_secret("DATABASE_NAME")
+DB_USER = get_secret("DATABASE_USERNAME")
+DB_PASSWORD = get_secret("DATABASE_PASSWORD")
+DB_HOST = get_secret("DATABASE_HOST")
+DB_PORT = get_secret("PORT")
 
 DATABASES = {
     'default': {
@@ -169,17 +169,21 @@ DATABASES = {
     }
 }
 
-#Email settings
 
+# Email settings
 
-email_host=get_secret("EMAIL_HOST")
-email_host_user=get_secret("EMAIL_HOST_USER")
-email_host_password=get_secret("EMAIL_HOST_PASSWORD")
+email_host = get_secret("EMAIL_HOST")
+email_host_user = get_secret("EMAIL_HOST_USER")
+email_to_user = get_secret("EMAIL_TO_USER")
+email_host_password = get_secret("EMAIL_HOST_PASSWORD")
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = email_host
 EMAIL_HOST_USER = email_host_user
 EMAIL_HOST_PASSWORD = email_host_password
+DEFAULT_FROM_EMAIL = email_host_user
+DEFAULT_TO_EMAIL = email_to_user
+SERVER_EMAIL = email_host_user
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 

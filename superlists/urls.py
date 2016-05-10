@@ -6,6 +6,8 @@ from django.contrib.sitemaps.views import sitemap
 
 from valueFact.sitemaps import PostSitemap
 from valueFact import views as stockviews
+from superlists import views as mainViews
+
 
 
 admin.autodiscover()
@@ -18,7 +20,10 @@ urlpatterns = [
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^companies/', include('valueFact.urls', namespace='companies', app_name='companies')),
-    url(r'^account/', include('accounts.urls')),
+    url(r'^account/', include('accounts.urls', namespace='accounts')),
+    url(r'^faq/', mainViews.faq, name='faq'),
+    url(r'^toc/', mainViews.toc, name='toc'),
+    url(r'^contact/', stockviews.contact, name='contact'),
     url('social-auth/', include('social.apps.django_app.urls', namespace='social')),
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},
         name='django.contrib.sitemaps.views.sitemap'),

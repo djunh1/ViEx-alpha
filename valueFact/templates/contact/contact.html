@@ -1,0 +1,44 @@
+{% extends 'base_search.html' %}
+
+{% block content %}
+
+<div class="section ex_hero_faq">
+	  <div class="container">
+          <h1 class="color1 section-title">Contact</h1>
+		  <div class="col-sm-6">
+			 <div class="dark textbox_faq">
+		        <h2>Get in touch</h2>
+
+		        <p>For information about our site, questions about how it works, the best way to get in touch with us
+        is by submitting this form.  We will get back to you as soon as we are able, usually within a few business days.</p>
+
+        <p>
+            Please use this form for bug reporting, or features that might improve this site.
+        </p>
+
+			  </div>
+		  </div>
+	  	 <div class="col-sm-6">
+		{% if sent %}
+        	<h1>E-mail successfully sent</h1>
+            <p>Your email was successfully sent!</p>
+			 <p>Thank you for reaching out to us!</p>
+        {% else %}
+
+	    <form class="std-form std-form-welcome" name="form"  action="" method="post">
+			{% csrf_token %}
+            {{ form.as_p }}
+
+	         <div class="form-group tightRow">
+                  <button type="submit" class="button button-primary">Submit Problem</button>
+			 </div>
+	     </form>
+		{% endif %}
+
+	</div>
+	  </div>
+</div>
+
+
+
+{% endblock %}

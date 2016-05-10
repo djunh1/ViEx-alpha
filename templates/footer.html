@@ -3,12 +3,15 @@
         <div class="footer-menu">
             <ul >
                 <li class="alignRight"><a class="footerLink" href="/browse">Browse Stocks</a></li>
-                <li class="alignRight"><a class="footerLink" href="/companies">Stock Research</a></li>
-                <li class="alignRight"><a class="footerLink" href="/welcome">About</a></li>
-                <li class="alignRight"><a class="footerLink" href="/faq">FAQ</a></li>
-                <li class="alignRight"><a class="footerLink" href="/termsandconditions">Terms and Conditions</a></li>
-                <li class="alignRight"><a class="footerLink" href="/+{{ user.username }}/settings">My Account</a></li>
-                <li class="alignRight"><a class="footerLink" href="/contact">Contact</a></li>
+                <li class="alignRight"><a class="footerLink" href="{% url 'companies:search_home' %}">Stock Research</a></li>
+                <li class="alignRight"><a class="footerLink" href="{% url 'accounts:welcome' %}">About</a></li>
+                <li class="alignRight"><a class="footerLink" href="{% url 'faq' %}">FAQ</a></li>
+                <li class="alignRight"><a class="footerLink" href="{% url 'toc' %}">Terms and Conditions</a></li>
+
+                <li class="alignRight"><a class="footerLink" href="{% url 'contact' %}">Contact</a></li>
+                {% if request.user.is_authenticated %}
+                <li class="alignRight"><a class="footerLink" href="{% url 'accounts:edit' %}">My Account</a></li>
+                {% endif %}
             </ul>
         </div>
         <div class="about">

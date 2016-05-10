@@ -13,16 +13,17 @@
           <span class="fa fa-user" id="login-title"></span>
 
 
-          <form action="{% url 'django.contrib.auth.views.login' %}" method="post">
+          <form action="{% url 'accounts:login' %}" method="post">
             {{ form.as_p }}
             {% csrf_token %}
+
             <div class="form-group">
               <input type="hidden" name="next" value="{{ next }}"/>
               <p><input type="submit" class="button button-primary" value="Log In"></p>
             </div>
 
             <div class="form-group">
-              <a href="/faq" class="alignRight">help</a>
+              <a href="{% url 'faq' %}" class="alignRight">help</a>
             </div>
           </form>
 
@@ -30,14 +31,11 @@
           {% if form.errors %}
             <p>Username and password did not match.  Please try again.</p>
           {% else %}
-            <p>No account? Please  <a href="{% url 'register' %}" class="loginLink">register here</a></p>
+            <p>No account? Please  <a href="{% url 'accounts:register' %}" class="loginLink">register here</a></p>
           {% endif %}
-
-          <p><a href="{% url 'django.contrib.auth.views.password_reset' %}">Lost Password?</a></p>
-
-
-
+          <p><a href="{% url 'accounts:password_reset' %}">Lost Password?</a></p>
       </div>
+
       <div class="col-md-5 col-md-offset-1">
         <h3>Log in with Social Media</h3>
             <div class="loginSocial">

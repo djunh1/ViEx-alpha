@@ -6,13 +6,17 @@ from django.core.mail import send_mail
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.utils import timezone
-import datetime
-import smtplib
+
+#email
+from django.template.loader import get_template
+from django.core.mail import EmailMessage
+from django.template import Context
+
+#Custom
 from yahoo_finance import Share
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 
-from valueFact.forms import EmailPostForm, CommentForm, StockForm
+from valueFact.forms import EmailPostForm, CommentForm, StockForm, ContactForm
 from valueFact.models import ValueFactPost, Symbol, Comment
 from valueFact.controller import mySQLdb_query, stat_cleaner, yahoo_cleaner
 
@@ -31,6 +35,7 @@ def home_page(request):
 def search_home(request):
     form = StockForm()
     return render(request, 'search/search_home.html', {"form": form})
+
 
 def get_posts(request, ticker):
     posts = ValueFactPost.objects.all()
@@ -228,3 +233,21 @@ def valuefact_share(request, fact_id):
                                                               'form': form,
                                                               'sent': sent})
 
+
+def contact(request):
+    form_class = ContactForm
+    sent = False
+    if request.method == 'POST':
+        form = form_class(data=request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            template = get_template('contact/contact_template.txt')
+
+            subject = '{} at ({}) has sent an email from the Value Investing Exchange'.format(cd['contact_name'],
+                                                                                              cd['contact_email'])
+
+            message = 'The message sent was \n\n {}'.format(cd['content'])
+
+            send_mail(subject, message, cd['contact_email'], ['djunh1@gmail.com'], fail_silently=False)
+            sent = True
+    return render(request, 'contact/contact.html', {"form": form_class, "sent": sent})

@@ -1,3 +1,7 @@
+{% extends "base.html" %}
+
+
+{% block content %}
 <div class="section hero">
     <div class="container-fluid">
         <div class="'row">
@@ -6,7 +10,7 @@
                 <h5>
                     Research stocks. Make informed investing decisions.  Contribute to the community.
                 </h5>
-                <a class="button button-primary" href="/register">Sign Up</a>
+                <a class="button button-primary" href="{% url 'accounts:register' %}">Sign Up</a>
             </div>
             <div class="col-sm-6 computers">
                 <figure>
@@ -83,14 +87,21 @@
             <h3 class="color2 section-title2">Create Account</h3>
             <div class="row loginBox">
                 <div class="loginSocial">
-                    <a id="facebook" class="regular-btn btn-social btn-facebook social-login">
+                    <a id="facebook" class="regular-btn btn-social btn-facebook social-login"
+                    href="{% url "social:begin" "facebook" %}">
 		            <i class="fa fa-facebook" style="padding: 2px; color: white;"></i>
 		            <span class="mobile-hide">Log in with </span>Facebook
 		            </a>
 
-                    <a id="google" class="regular-btn btn-social btn-google social-login">
+                    <a id="google" class="regular-btn btn-social btn-google social-login"
+                    href="{% url "social:begin" "google-oauth2" %}">
 		            <i class="fa fa-google-plus" style="padding: 2px; color: white;"></i>
 		            <span class="mobile-hide">Log in with </span>Google
+		            </a>
+                    <a id="twitter" class="regular-btn btn-social btn-twitter social-login"
+                   href="{% url "social:begin" "twitter" %}">
+		            <i class="fa fa-twitter" style="padding: 2px; color: white;"></i>
+		            <span class="mobile-hide">Log in with </span>Twitter
 		            </a>
 
                 </div>
@@ -102,35 +113,35 @@
                     </label>
                 </div>
                 <hr class="hr-alt"></hr>
-                <form class="std-form std-form-welcome loginBox" role="form" ng-submit="vm.register()"">
-                    <div class="form-group">
-                        <input type="email" class="form-control" id="register__email" ng-model="vm.email"
-                               placeholder="Email" />
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="register__username" ng-model="vm.username"
-                               placeholder="User Name" />
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" id="register__password" ng-model="vm.password"
-                               placeholder="Password" />
-                    </div>
-                <div class="row" style="margin-top: 10px;">
-                    <label class="label-body" for="valueExchange-agreement">
-                        <input id="valueExchange-agreement" class="agreement-checkbox" type="checkbox" style="margin-right:5px;">
-                        I agree to
-                        <a id="blank" target="_blank" href="{% url 'toc' %}">terms and conditions</a>
-                    </label>
-                </div>
-                <div class="form-group tightRow">
-                  <button type="submit" class="button button-primary">Sign Up</button>
-                </div>
 
-                <a href="/login" class="loginLink">Login to your account</a>
-                <p class="disclaimer">Information contained in this website is not Investment Advice.  Please take into consideration
-                all risks associated with investing into securities including irrecoverable loss of principal.</p>
-                </form>
+
+                 <form class="std-form std-form-welcome loginBox"
+                       action="{% url 'accounts:login' %}" method="post">
+                    {{ user_form }}
+                    {% csrf_token %}
+                     <div class="row" style="margin-top: 10px;">
+                       <label class="label-body" for="valueExchange-agreement">
+                        <input id="valueExchange-agreement" class="agreement-checkbox" type="checkbox" style="margin-right:5px;">
+                            I agree to
+                            <a id="blank" target="_blank" href="{% url 'toc' %}">terms and conditions</a>
+                        </label>
+                      </div>
+                    <div class="form-group">
+                      <input type="hidden" name="next" value="{{ next }}"/>
+                      <p><input type="submit" class="button button-primary" value="Sign Up"></p>
+                        <a href="{% url 'accounts:login' %}" class="loginLink">Login to your account</a>
+                        <p class="disclaimer">Information contained in this website is not Investment Advice.
+                            Please take into consideration
+                        all risks associated with investing into securities including irrecoverable loss of principal.</p>
+                    </div>
+                  </form>
+
+
+
+
+
             </div>
         </div>
     </div>
 </div><!-- End signup section -->
+{% endblock %}

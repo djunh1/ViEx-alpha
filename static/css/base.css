@@ -2122,7 +2122,7 @@ border-left: 0.1rem solid rgba(255, 255, 255, 0.3);
 ///////////////////////////////////////////////////////////////////////*/
 
  .ex_hero_faq {
-      background-image: url(../assets/images/aboutfaq/contact.jpg);
+      /*background-image: url(../assets/images/aboutfaq/contact.jpg); */
       background-size:cover;
       background-position: center center;
       box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0);

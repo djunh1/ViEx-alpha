@@ -12,7 +12,7 @@
               {% if messages %}
                 <ul class="messages">
                     {% for message in messages %}
-                    <a href="{% url 'edit' %}" class="close">×</a>
+                    <a href="{% url 'accounts:edit' %}" class="close">×</a>
                         <li class="{{ message.tags }}">
                             {{ message|safe }}
 
