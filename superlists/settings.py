@@ -8,6 +8,7 @@ TO-DO:
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import json
+import sys
 
 from django.core.exceptions import ImproperlyConfigured
 from django.core.urlresolvers import reverse_lazy
@@ -20,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 #JSON Based Secret module
 with open("secrets.json") as f:
-    secrets=json.loads(f.read())
+    secrets = json.loads(f.read())
 
 def get_secret(setting,secrets=secrets):
     '''
@@ -62,7 +63,6 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'social.apps.django_app.default',
     'djangobower',
-    'rest_framework',
     'functional_tests',
     'valueFact',
 )
@@ -169,6 +169,13 @@ DATABASES = {
     }
 }
 
+if 'test' in sys.argv:
+    print(sys.argv)
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': DB_NAME
+    }
+
 
 # Email settings
 
@@ -177,6 +184,7 @@ email_host_user = get_secret("EMAIL_HOST_USER")
 email_to_user = get_secret("EMAIL_TO_USER")
 email_host_password = get_secret("EMAIL_HOST_PASSWORD")
 
+# Can change the stmp part to console in order to simply test the email output.
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = email_host
 EMAIL_HOST_USER = email_host_user

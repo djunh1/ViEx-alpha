@@ -1,10 +1,10 @@
-from django.test import TestCase
+from django.test import SimpleTestCase
 from django.contrib.auth import get_user_model, SESSION_KEY
 from unittest.mock import patch
 
 
 '''
-class LoginViewTest(TestCase):
+class LoginViewTest(SimpleTestCase):
 
 	@patch('accounts.views.authenticate')
 	def test_calls_authenticate_with_assretion_from_POST(self,mock_authenticate):

@@ -8,7 +8,12 @@ import unittest
 import sys
 import os
 import time
+from mock import patch
 from .server_tools import reset_database
+
+from django.test import TransactionTestCase
+from django.test.runner import DiscoverRunner as BaseRunner
+
 
 DEFAULT_WAIT = 5
 SCREEN_DUMP_LOCATION = os.path.join(
@@ -41,21 +46,21 @@ class FunctionalTest(StaticLiveServerTestCase):
             reset_database(self.server_host) 
         self.browser = webdriver.Firefox()
         self.browser.implicitly_wait(DEFAULT_WAIT)
-   
+
     def tearDown(self): 
         if self._test_has_failed():
-            if not os.path.exiests(SCREEN_DUMP_LOCATION):
+            if not os.path.exists(SCREEN_DUMP_LOCATION):
                 os.makedirs(SCREEN_DUMP_LOCATION)
-            for ix,handle in enumerate(self.browser.window_handles):
+            for ix, handle in enumerate(self.browser.window_handles):
                 self.windowid=ix
                 self.browser.switch_to_window(handle)
                 self.take_screenshot()
                 self.dump_html() 
         self.browser.quit()
-        super.tearDown()
+        super().tearDown()
 
     def _test_has_failed(self):
-        for method,error in self._outcome.errors:
+        for method, error in self._outcome.errors:
             if error:
                 return True
             return False
@@ -82,7 +87,7 @@ class FunctionalTest(StaticLiveServerTestCase):
         )         
 
     def get_stock_input_box(self):
-        return self.browser.find_element_by_id('id_text')
+        return self.browser.find_element_by_id('searchbarInner')
 
     def get_error_element(self):
         return self.browser.find_element_by_css_selector('.has-error')
@@ -114,4 +119,3 @@ class FunctionalTest(StaticLiveServerTestCase):
         self.assertNotIn(email, navbar.text)
 
 
-        

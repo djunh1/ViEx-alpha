@@ -27,6 +27,53 @@ class ValueFactManager(models.Manager):
         return super(ValueFactManager, self).get_queryset().filter(status='published')
 
 
+class Statementrow(models.Model):
+    statement_id = models.IntegerField()
+    roworder = models.IntegerField(db_column='rowOrder')  # Field name made lowercase.
+    rowtitle = models.CharField(db_column='rowTitle', max_length=255, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'statementRow'
+
+
+class Symbol(models.Model):
+    exchange_id = models.IntegerField(blank=True, null=True)
+    ticker = models.CharField(max_length=32)
+    instrument = models.CharField(max_length=64)
+    name = models.CharField(max_length=255, blank=True, null=True)
+    sector = models.CharField(max_length=255, blank=True, null=True)
+    currency = models.CharField(max_length=32, blank=True, null=True)
+    created_date = models.DateTimeField()
+    last_updated_date = models.DateTimeField()
+
+    objects = models.Manager()
+
+    class Meta:
+        managed = False
+        db_table = 'symbol'
+
+    def __str__(self):
+        return '%s' %self.name
+
+    def get_absolute_url(self):
+        return reverse('companies:view_stock', kwargs={'symbol': self.ticker})
+
+
+class Statementdata(models.Model):
+    symbol = models.ForeignKey('Symbol')
+    statementRow_Id = models.ForeignKey('Statementrow')
+    type = models.CharField(max_length=32)
+    date = models.DateTimeField()
+    amount = models.DecimalField(max_digits=19, decimal_places=4, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'statementData'
+        unique_together = (('id', 'statementRow_Id'),)
+
+
+
 
 class ValueFactPost(models.Model):
     value_fact_category = (
@@ -83,27 +130,7 @@ class ValueFactPost(models.Model):
 
 
 
-class Symbol(models.Model):
-    exchange_id = models.IntegerField(blank=True, null=True)
-    ticker = models.CharField(max_length=32)
-    instrument = models.CharField(max_length=64)
-    name = models.CharField(max_length=255, blank=True, null=True)
-    sector = models.CharField(max_length=255, blank=True, null=True)
-    currency = models.CharField(max_length=32, blank=True, null=True)
-    created_date = models.DateTimeField()
-    last_updated_date = models.DateTimeField()
 
-    objects = models.Manager()
-
-    class Meta:
-        managed = False
-        db_table = 'symbol'
-
-    def __str__(self):
-        return '%s' %self.name
-
-    def get_absolute_url(self):
-        return reverse('companies:view_stock', kwargs={'symbol': self.ticker})
 
 
 class Comment(models.Model):
