@@ -21,24 +21,20 @@ class StaticPageTest(FunctionalTest):
         inputBox = self.browser.find_element_by_id('id_text')
         self.assertIn('Search for a stock...', inputBox.get_attribute('placeholder'))
 
+    def test_faq_site(self):
+        self.browser.get(self.server_url + '/faq/')
+
+
 
 class NewVisitorTest(FunctionalTest): 
 
     def test_can_search_stocks_and_get_information(self):  
         '''
-        This will check basic functionality of inputting and searching for stock information from
-        the MySQL DB. 
+        Checks the basic functionality of the front page.
 
-        TO DO -
-
-        Eventually expand this test to include the "facts" once they are designed.  For now, stick
-        to just the raw SQL data. 
         '''
         # Check to see if you can get into the website
         self.browser.get(self.server_url)
-
-
-        self.fail('Continue writing tests')  
 
 
 
